@@ -43,7 +43,7 @@ dependencies:
   device_info_plus: ^9.1.2
 
   # Location
-  geolocator: ^10.1.0
+  geolocator: ^11.1.0
   geocoding: ^2.2.0
 
   # Utils
