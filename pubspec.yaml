@@ -1,0 +1,117 @@
+name: arkani
+version: 1.0.0+1
+publish_to: none
+
+description: أركاني - تطبيق إسلامي شامل للأذكار والأحكام ومواقيت الصلاة والمساجد
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Navigation
+  go_router: ^13.2.0
+
+  # HTTP Client
+  dio: ^5.4.1
+  retry: ^3.1.2
+
+  # Local Storage
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  shared_preferences: ^2.2.2
+
+  # Push Notifications
+  onesignal_flutter: ^5.1.2
+
+  # Environment & Configuration
+  flutter_dotenv: ^5.1.0
+  package_info_plus: ^5.0.1
+  device_info_plus: ^9.1.2
+
+  # Location
+  geolocator: ^10.1.0
+  geocoding: ^2.2.0
+
+  # Utils
+  uuid: ^4.3.3
+  equatable: ^2.0.5
+  json_annotation: ^4.8.1
+  freezed_annotation: ^2.4.1
+  dartz: ^0.10.1
+  connectivity_plus: ^5.0.2
+  internet_connection_checker: ^1.0.0+1
+
+  # UI
+  google_fonts: ^6.1.0
+  flutter_svg: ^2.0.10
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.1
+  flutter_animate: ^4.5.0
+  smooth_page_indicator: ^1.1.0
+  pull_to_refresh: ^2.0.0
+  url_launcher: ^6.2.5
+  share_plus: ^7.2.2
+
+  # Maps (for mosques)
+  google_maps_flutter: ^2.6.0
+  flutter_polyline_points: ^2.0.0
+
+  # Date/Time
+  intl: ^0.18.1
+  hijri: ^3.0.0
+  prayer_times: ^1.0.0
+
+  # Audio (for adhkar)
+  audioplayers: ^5.2.1
+  vibration: ^1.8.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  build_runner: ^2.4.8
+  json_serializable: ^6.7.1
+  freezed: ^2.4.7
+  riverpod_generator: ^2.4.0
+  hive_generator: ^2.0.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.10
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - .env
+    - .env.development
+    - .env.production
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#0F6E56"
+  adaptive_icon_foreground: "assets/images/app_icon_foreground.png"
+
+flutter_native_splash:
+  color: "#0F6E56"
+  image: "assets/images/splash_logo.png"
+  android: true
+  ios: true
+  android_12:
+    image: "assets/images/splash_logo_android12.png"
+    icon_background_color: "#0F6E56"

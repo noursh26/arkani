@@ -1,0 +1,19 @@
+# Build Configuration for Arkani App
+
+targets:
+  $default:
+    builders:
+      freezed:
+        enabled: true
+        options:
+          build_extensions:
+            ".dart": [".freezed.dart"]
+      json_serializable:
+        enabled: true
+        options:
+          explicit_to_json: true
+          field_rename: snake
+      riverpod_generator:
+        enabled: true
+      hive_generator:
+        enabled: true
