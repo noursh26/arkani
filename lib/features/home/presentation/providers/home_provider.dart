@@ -8,6 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/di/providers.dart';
 import '../../../core/errors/exceptions.dart';
+import '../../../core/services/prayer_calculation_service.dart';
 import '../../../core/utils/location_util.dart';
 import '../../domain/entities/prayer_times.dart';
 import 'home_state.dart';
@@ -83,7 +84,7 @@ class HomeNotifier extends _$HomeNotifier {
       
       _calculateNextPrayer(prayerTimes);
     } on NetworkException catch (e) {
-      // Try to use cached data if available
+      // Try to use cached data first, then fallback to local calculation
       final cachedData = cacheBox.get(AppConstants.prayerTimesKey) as String?;
       if (cachedData != null) {
         try {
@@ -98,20 +99,12 @@ class HomeNotifier extends _$HomeNotifier {
           );
           _calculateNextPrayer(prayerTimes);
         } catch (_) {
-          state = state.copyWith(
-            isLoading: false,
-            isOffline: true,
-            error: 'لا يوجد اتصال بالإنترنت',
-            locationPermissionGranted: false,
-          );
+          // Fall back to local calculation
+          await _fallbackToLocalCalculation(cacheBox, today);
         }
       } else {
-        state = state.copyWith(
-          isLoading: false,
-          isOffline: true,
-          error: 'لا يوجد اتصال بالإنترنت',
-          locationPermissionGranted: false,
-        );
+        // No cached data, use local calculation
+        await _fallbackToLocalCalculation(cacheBox, today);
       }
     } on AppException catch (e) {
       state = state.copyWith(
@@ -119,9 +112,60 @@ class HomeNotifier extends _$HomeNotifier {
         error: e.message,
       );
     } catch (e) {
+      // Fallback to local calculation for any unexpected errors
+      await _fallbackToLocalCalculation(cacheBox, today);
+    }
+  }
+
+  void _fallbackToLocalCalculation(Box cacheBox, String today) async {
+    try {
+      // Use local calculation with default or retrieved location
+      LocationData? location;
+      try {
+        location = await ref.read(locationUtilProvider).getCurrentLocation();
+      } catch (_) {
+        location = null;
+      }
+      
+      final prayerTimes = PrayerCalculationService.calculatePrayerTimesEntity(
+        latitude: location?.latitude ?? PrayerCalculationService.defaultLatitude,
+        longitude: location?.longitude ?? PrayerCalculationService.defaultLongitude,
+        city: location?.city,
+        country: location?.country,
+      );
+
+      // Save to cache
+      final prayerData = {
+        'fajr': prayerTimes.fajr,
+        'sunrise': prayerTimes.sunrise,
+        'dhuhr': prayerTimes.dhuhr,
+        'asr': prayerTimes.asr,
+        'maghrib': prayerTimes.maghrib,
+        'isha': prayerTimes.isha,
+        'date': prayerTimes.date,
+        'hijriDate': prayerTimes.hijriDate,
+        'city': prayerTimes.city,
+        'country': prayerTimes.country,
+      };
+
+      await cacheBox.put(AppConstants.prayerTimesKey, jsonEncode(prayerData));
+      await cacheBox.put(AppConstants.prayerTimesDateKey, today);
+
       state = state.copyWith(
         isLoading: false,
-        error: 'حدث خطأ غير متوقع',
+        prayerTimes: prayerTimes,
+        isOffline: true,
+        error: null,
+        locationPermissionGranted: location != null && 
+          location.latitude != PrayerCalculationService.defaultLatitude,
+      );
+      _calculateNextPrayer(prayerTimes);
+    } catch (localError) {
+      state = state.copyWith(
+        isLoading: false,
+        isOffline: true,
+        error: 'لا يوجد اتصال بالإنترنت',
+        locationPermissionGranted: false,
       );
     }
   }
@@ -131,12 +175,12 @@ class HomeNotifier extends _$HomeNotifier {
     final today = now.toIso8601String().split('T')[0];
     
     final prayers = [
-      {'name': 'الفجر', 'time': DateTime.parse('$today ${prayerTimes.timings.fajr}')},
-      {'name': 'الشروق', 'time': DateTime.parse('$today ${prayerTimes.timings.sunrise}')},
-      {'name': 'الظهر', 'time': DateTime.parse('$today ${prayerTimes.timings.dhuhr}')},
-      {'name': 'العصر', 'time': DateTime.parse('$today ${prayerTimes.timings.asr}')},
-      {'name': 'المغرب', 'time': DateTime.parse('$today ${prayerTimes.timings.maghrib}')},
-      {'name': 'العشاء', 'time': DateTime.parse('$today ${prayerTimes.timings.isha}')},
+      {'name': 'الفجر', 'time': DateTime.parse('$today ${prayerTimes.fajr}')},
+      {'name': 'الشروق', 'time': DateTime.parse('$today ${prayerTimes.sunrise}')},
+      {'name': 'الظهر', 'time': DateTime.parse('$today ${prayerTimes.dhuhr}')},
+      {'name': 'العصر', 'time': DateTime.parse('$today ${prayerTimes.asr}')},
+      {'name': 'المغرب', 'time': DateTime.parse('$today ${prayerTimes.maghrib}')},
+      {'name': 'العشاء', 'time': DateTime.parse('$today ${prayerTimes.isha}')},
     ];
 
     // Find next prayer
@@ -144,7 +188,7 @@ class HomeNotifier extends _$HomeNotifier {
       (p) => (p['time'] as DateTime).isAfter(now),
       orElse: () => {
         'name': 'الفجر',
-        'time': DateTime.parse('$today ${prayerTimes.timings.fajr}').add(const Duration(days: 1)),
+        'time': DateTime.parse('$today ${prayerTimes.fajr}').add(const Duration(days: 1)),
       },
     );
 

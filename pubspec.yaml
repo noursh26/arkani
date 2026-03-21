@@ -69,7 +69,7 @@ dependencies:
   # Date/Time
   intl: ^0.18.1
   hijri: ^3.0.0
-  prayer_times: ^1.0.0
+  adhan: ^2.0.0
 
   # Audio (for adhkar)
   audioplayers: ^5.2.1
