@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../../core/utils/location_util.dart';
+import '../../../../core/utils/location_util.dart';
 import '../../domain/entities/mosque.dart';
 
 part 'mosques_state.freezed.dart';

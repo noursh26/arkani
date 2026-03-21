@@ -1,7 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:flutter/foundation.dart';
 
 /// Service for managing local notifications for prayer times
 class LocalNotificationService {
@@ -92,7 +92,7 @@ class LocalNotificationService {
 
     final notificationText = 'حان وقت صلاة $prayerName، استجب لنداء ربك 🕌';
 
-    final androidDetails = AndroidNotificationDetails(
+    const androidDetails = AndroidNotificationDetails(
       _prayerNotificationChannelId,
       _prayerNotificationChannelName,
       channelDescription: _prayerNotificationChannelDesc,

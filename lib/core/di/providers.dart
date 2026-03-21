@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/network/api_service.dart';
-import '../../core/network/dio_client.dart';
-import '../../core/services/onesignal_service.dart';
-import '../../core/utils/device_info_util.dart';
-import '../../core/utils/device_uuid_util.dart';
-import '../../core/utils/location_util.dart';
+import '../network/api_service.dart';
+import '../network/dio_client.dart';
+import '../services/onesignal_service.dart';
+import '../utils/device_info_util.dart';
+import '../utils/device_uuid_util.dart';
+import '../utils/location_util.dart';
 
 // Network
 final dioClientProvider = Provider<DioClient>((ref) {

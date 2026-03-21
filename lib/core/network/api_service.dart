@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'dio_client.dart';
+
 import '../errors/exceptions.dart';
+import 'dio_client.dart';
 
 class ApiService {
   final DioClient _dioClient;
@@ -160,26 +159,6 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> _put(
-    String path, {
-    dynamic data,
-  }) async {
-    try {
-      final response = await _dio.put(path, data: data);
-      return _handleResponse(response);
-    } on DioException catch (e) {
-      throw _handleError(e);
-    }
-  }
-
-  Future<Map<String, dynamic>> _delete(String path) async {
-    try {
-      final response = await _dio.delete(path);
-      return _handleResponse(response);
-    } on DioException catch (e) {
-      throw _handleError(e);
-    }
-  }
 
   Map<String, dynamic> _handleResponse(Response response) {
     if (response.data is Map<String, dynamic>) {

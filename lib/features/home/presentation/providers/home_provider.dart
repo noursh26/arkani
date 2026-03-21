@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter/foundation.dart';
 
-import '../../../core/constants/app_constants.dart';
-import '../../../core/di/providers.dart';
-import '../../../core/errors/exceptions.dart';
-import '../../../core/services/local_notification_service.dart';
-import '../../../core/services/prayer_calculation_service.dart';
-import '../../../core/utils/location_util.dart';
+import '../../../../core/constants/app_constants.dart';
+import '../../../../core/di/providers.dart';
+import '../../../../core/errors/exceptions.dart';
+import '../../../../core/services/local_notification_service.dart';
+import '../../../../core/services/prayer_calculation_service.dart';
+import '../../../../core/utils/location_util.dart';
 import '../../domain/entities/prayer_times.dart';
 import 'home_state.dart';
 
@@ -106,11 +105,11 @@ class HomeNotifier extends _$HomeNotifier {
           await _schedulePrayerNotifications(prayerTimes);
         } catch (_) {
           // Fall back to local calculation
-          await _fallbackToLocalCalculation(cacheBox, today);
+          _fallbackToLocalCalculation(cacheBox, today);
         }
       } else {
         // No cached data, use local calculation
-        await _fallbackToLocalCalculation(cacheBox, today);
+        _fallbackToLocalCalculation(cacheBox, today);
       }
     } on AppException catch (e) {
       state = state.copyWith(
@@ -119,7 +118,7 @@ class HomeNotifier extends _$HomeNotifier {
       );
     } catch (e) {
       // Fallback to local calculation for any unexpected errors
-      await _fallbackToLocalCalculation(cacheBox, today);
+      _fallbackToLocalCalculation(cacheBox, today);
     }
   }
 
@@ -193,7 +192,7 @@ class HomeNotifier extends _$HomeNotifier {
     ];
 
     // Find next prayer
-    var nextPrayer = prayers.firstWhere(
+    final nextPrayer = prayers.firstWhere(
       (p) => (p['time'] as DateTime).isAfter(now),
       orElse: () => {
         'name': 'الفجر',

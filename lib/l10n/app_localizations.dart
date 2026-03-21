@@ -55,6 +55,9 @@ class AppLocalizations {
       'no_results': 'لا توجد نتائج',
       'azan_time': 'حان وقت الآذان',
       'nafil_prayers': 'النوافل',
+      'mosques_title': 'المساجد القريبة',
+      'rulings_title': 'الأحكام الشرعية',
+      'search_rulings': 'البحث في الأحكام...',
     },
   };
 
@@ -100,6 +103,9 @@ class AppLocalizations {
   String get noResults => _localizedValues[locale.languageCode]?['no_results'] ?? 'لا توجد نتائج';
   String get azanTime => _localizedValues[locale.languageCode]?['azan_time'] ?? 'حان وقت الآذان';
   String get nafilPrayers => _localizedValues[locale.languageCode]?['nafil_prayers'] ?? 'النوافل';
+  String get mosquesTitle => _localizedValues[locale.languageCode]?['mosques_title'] ?? 'المساجد القريبة';
+  String get rulingsTitle => _localizedValues[locale.languageCode]?['rulings_title'] ?? 'الأحكام الشرعية';
+  String get searchRulings => _localizedValues[locale.languageCode]?['search_rulings'] ?? 'البحث في الأحكام...';
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

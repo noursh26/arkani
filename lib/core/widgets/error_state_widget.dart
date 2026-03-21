@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_typography.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_typography.dart';
 import '../../l10n/app_localizations.dart';
 
 class ErrorStateWidget extends StatelessWidget {
@@ -21,7 +21,7 @@ class ErrorStateWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.error_outline,
             size: 64,
             color: AppColors.error,
@@ -29,7 +29,7 @@ class ErrorStateWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             message ?? l10n.error,
-            style: AppTypography.bodyLarge.copyWith(
+            style: AppTypography.textTheme.bodyLarge?.copyWith(
               color: AppColors.textSecondary,
             ),
             textAlign: TextAlign.center,

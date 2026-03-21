@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/constants/app_constants.dart';
-import '../../../core/di/providers.dart';
-import '../../../core/errors/exceptions.dart';
-import '../../../core/utils/location_util.dart';
+import '../../../../core/constants/app_constants.dart';
+import '../../../../core/di/providers.dart';
+import '../../../../core/errors/exceptions.dart';
+import '../../../../core/utils/location_util.dart';
 import '../../domain/entities/mosque.dart';
 import 'mosques_state.dart';
 

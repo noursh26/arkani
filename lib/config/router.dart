@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/app_colors.dart';
-import '../../core/utils/custom_transitions.dart';
-import '../../l10n/app_localizations.dart';
+import '../core/theme/app_colors.dart';
+import '../core/utils/custom_transitions.dart';
+import '../l10n/app_localizations.dart';
 import '../features/adhkar/presentation/pages/adhkar_page.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/mosques/presentation/pages/mosques_page.dart';
@@ -149,22 +148,22 @@ class ScaffoldWithNavBar extends StatelessWidget {
           NavigationDestination(
             icon: const Icon(Icons.home_outlined),
             selectedIcon: const Icon(Icons.home, color: AppColors.primary),
-            label: l10n?.homeTab ?? 'الرئيسية',
+            label: l10n.home,
           ),
           NavigationDestination(
             icon: const Icon(Icons.menu_book_outlined),
             selectedIcon: const Icon(Icons.menu_book, color: AppColors.primary),
-            label: l10n?.adhkarTab ?? 'الأذكار',
+            label: l10n.adhkar,
           ),
           NavigationDestination(
             icon: const Icon(Icons.gavel_outlined),
             selectedIcon: const Icon(Icons.gavel, color: AppColors.primary),
-            label: l10n?.rulingsTab ?? 'الأحكام',
+            label: l10n.rulings,
           ),
           NavigationDestination(
             icon: const Icon(Icons.location_on_outlined),
             selectedIcon: const Icon(Icons.location_on, color: AppColors.primary),
-            label: l10n?.mosquesTab ?? 'المساجد',
+            label: l10n.mosques,
           ),
         ],
       ),

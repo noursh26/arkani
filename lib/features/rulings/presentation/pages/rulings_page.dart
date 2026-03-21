@@ -4,10 +4,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/error_widget.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_typography.dart';
+import '../../../../core/widgets/error_state_widget.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/islamic_ruling.dart';
 import '../providers/rulings_provider.dart';
 import '../widgets/ruling_card.dart';
@@ -75,7 +75,7 @@ class _RulingsPageState extends ConsumerState<RulingsPage> {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                l10n?.rulingsTitle ?? 'الأحكام الشرعية',
+                l10n.rulingsTitle,
                 style: AppTypography.textTheme.titleLarge?.copyWith(
                   color: innerBoxIsScrolled ? AppColors.textPrimary : AppColors.onPrimary,
                 ),
@@ -117,7 +117,7 @@ class _RulingsPageState extends ConsumerState<RulingsPage> {
                   ref.read(rulingsNotifierProvider.notifier).search(value);
                 },
                 decoration: InputDecoration(
-                  hintText: l10n?.searchRulings ?? 'البحث في الأحكام...',
+                  hintText: l10n.searchRulings,
                   hintStyle: AppTypography.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textTertiary,
                   ),

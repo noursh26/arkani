@@ -3,23 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:go_router/go_router.dart';
-import '../../../core/services/onesignal_service.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/utils/location_util.dart';
-import '../../../core/widgets/error_widget.dart';
-import '../../../core/widgets/loading_widget.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_typography.dart';
+import '../../../../core/widgets/error_state_widget.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/prayer_times.dart';
 import '../providers/home_provider.dart';
-import '../widgets/prayer_times_strip.dart';
-import '../widgets/next_prayer_countdown.dart';
 import '../widgets/azan_nafil_sheet.dart';
-import '../widgets/today_notification_card.dart';
 import '../widgets/hero_section.dart';
+import '../widgets/home_skeleton_loading.dart';
+import '../widgets/next_prayer_countdown.dart';
+import '../widgets/prayer_times_strip.dart';
+import '../widgets/today_notification_card.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -153,7 +149,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               background: HeroSection(prayerTimes: state.prayerTimes),
             ),
             title: innerBoxIsScrolled
-                ? Text(l10n?.appName ?? 'أركاني')
+                ? Text(l10n.appName)
                 : null,
             actions: [
               IconButton(

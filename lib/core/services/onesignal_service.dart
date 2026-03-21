@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../config/env_config.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/network/api_service.dart';
-import '../../core/utils/device_info_util.dart';
+import '../constants/app_constants.dart';
+import '../network/api_service.dart';
+import '../utils/device_info_util.dart';
 
 /// Callback types for OneSignal events
 typedef OnNotificationReceived = void Function(String title, String body, String? type);
@@ -186,6 +186,6 @@ class OneSignalService {
 
   /// Get current notification permission status
   Future<bool> hasNotificationPermission() async {
-    return OneSignal.Notifications.permission ?? false;
+    return OneSignal.Notifications.permission;
   }
 }

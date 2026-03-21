@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import '../constants/app_constants.dart';
 import '../utils/device_uuid_util.dart';
 
 class DeviceInfo {

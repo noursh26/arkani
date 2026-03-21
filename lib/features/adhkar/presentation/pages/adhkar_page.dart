@@ -5,11 +5,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../core/providers/settings_provider.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/widgets/error_widget.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../../core/providers/settings_provider.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_typography.dart';
+import '../../../../core/widgets/error_state_widget.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/adhkar_category.dart';
 import '../providers/adhkar_provider.dart';
 import '../widgets/category_grid_item.dart';
@@ -23,7 +23,7 @@ class AdhkarPage extends ConsumerStatefulWidget {
 }
 
 class _AdhkarPageState extends ConsumerState<AdhkarPage> {
-  bool _preventScreenshot = true;
+  final bool _preventScreenshot = true;
 
   @override
   void initState() {
@@ -251,7 +251,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                l10n?.adhkarTitle ?? 'الأذكار',
+                l10n.adhkarCategories,
                 style: AppTypography.textTheme.titleLarge?.copyWith(
                   color: innerBoxIsScrolled ? AppColors.textPrimary : AppColors.onPrimary,
                 ),

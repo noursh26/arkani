@@ -5,12 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../core/constants/app_constants.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/utils/location_util.dart';
-import '../../../core/widgets/error_widget.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../../core/constants/app_constants.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_typography.dart';
+import '../../../../core/utils/location_util.dart';
+import '../../../../core/widgets/error_state_widget.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/mosque.dart';
 import '../providers/mosques_provider.dart';
 import '../widgets/mosque_list_item.dart';
@@ -96,7 +96,7 @@ class _MosquesPageState extends ConsumerState<MosquesPage> {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                l10n?.mosquesTitle ?? 'المساجد القريبة',
+                l10n.mosquesTitle,
                 style: AppTypography.textTheme.titleLarge?.copyWith(
                   color: innerBoxIsScrolled ? AppColors.textPrimary : AppColors.onPrimary,
                 ),

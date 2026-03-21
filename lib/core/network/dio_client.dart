@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:retry/retry.dart';
 import '../../config/env_config.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/errors/exceptions.dart';
+import '../constants/app_constants.dart';
 import 'api_interceptor.dart';
 
 class DioClient {

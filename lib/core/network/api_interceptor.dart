@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import '../../core/errors/exceptions.dart';
+import '../errors/exceptions.dart';
 import '../utils/device_info_util.dart';
 
 class ApiInterceptor extends Interceptor {
@@ -63,8 +62,12 @@ class ApiInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     final error = _handleDioError(err);
-    err.error = error;
-    handler.next(err);
+    handler.next(DioException(
+      requestOptions: err.requestOptions,
+      response: err.response,
+      type: err.type,
+      error: error,
+    ));
   }
 
   Exception _handleDioError(DioException error) {
