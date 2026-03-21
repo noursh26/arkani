@@ -83,7 +83,7 @@ jobs:
       - name: Decode Keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        if: env.KEYSTORE_BASE64 != ''
+        if: ${{ env.KEYSTORE_BASE64 != '' }}
         run: |
           echo "$KEYSTORE_BASE64" | base64 -d > android/app/keystore.jks
 
@@ -92,7 +92,8 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        if: env.KEYSTORE_PASSWORD != ''
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        if: ${{ env.KEYSTORE_BASE64 != '' }}
         run: |
           cat > android/key.properties <<EOF
           storePassword=$KEYSTORE_PASSWORD
@@ -102,19 +103,21 @@ jobs:
           EOF
 
       - name: Build APK (Unsigned)
-        if: secrets.KEYSTORE_BASE64 == ''
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        if: ${{ env.KEYSTORE_BASE64 == '' }}
         run: flutter build apk --release
 
       - name: Build APK (Signed)
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        if: env.KEYSTORE_BASE64 != ''
+        if: ${{ env.KEYSTORE_BASE64 != '' }}
         run: flutter build apk --release
 
       - name: Build App Bundle
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        if: env.KEYSTORE_BASE64 != ''
+        if: ${{ env.KEYSTORE_BASE64 != '' }}
         run: flutter build appbundle --release
 
       - name: Upload APK Artifact
@@ -126,7 +129,9 @@ jobs:
 
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v4
-        if: secrets.KEYSTORE_BASE64 != ''
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        if: ${{ env.KEYSTORE_BASE64 != '' }}
         with:
           name: aab-release
           path: build/app/outputs/bundle/release/*.aab
