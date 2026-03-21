@@ -186,7 +186,7 @@ class LocalNotificationService {
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
 
     final iosPlugin = _notificationsPlugin
-        .resolvePlatformSpecificImplementation<DarwinFlutterLocalNotificationsPlugin>();
+        .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
 
     if (androidPlugin != null) {
       final granted = await androidPlugin.requestNotificationsPermission();
