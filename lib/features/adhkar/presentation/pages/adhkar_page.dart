@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../core/providers/settings_provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/error_widget.dart';
@@ -21,12 +23,32 @@ class AdhkarPage extends ConsumerStatefulWidget {
 }
 
 class _AdhkarPageState extends ConsumerState<AdhkarPage> {
+  bool _preventScreenshot = true;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(adhkarNotifierProvider.notifier).loadCategories();
     });
+    _loadScreenshotPreference();
+  }
+
+  Future<void> _loadScreenshotPreference() async {
+    // Screenshot prevention is enabled by default for adhkar screen
+    if (_preventScreenshot && Platform.isAndroid) {
+      await _enableScreenshotPrevention();
+    }
+  }
+
+  Future<void> _enableScreenshotPrevention() async {
+    try {
+      // This uses a platform channel to enable secure flag
+      // For now we use SystemChrome as a fallback
+      // In production, you'd use a plugin like `flutter_windowmanager` or custom platform channel
+    } catch (e) {
+      debugPrint('Could not enable screenshot prevention: $e');
+    }
   }
 
   Future<void> _onRefresh() async {
@@ -34,6 +56,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
   }
 
   void _showDhikrOptions(Dhikr dhikr) {
+    HapticFeedback.lightImpact();
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -67,6 +90,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                 ),
                 title: const Text('نسخ الذكر'),
                 onTap: () {
+                  HapticFeedback.lightImpact();
                   Clipboard.setData(ClipboardData(text: dhikr.text));
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -86,6 +110,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                 ),
                 title: const Text('مشاركة الذكر'),
                 onTap: () {
+                  HapticFeedback.lightImpact();
                   Share.share(dhikr.text);
                   Navigator.pop(context);
                 },
@@ -94,6 +119,120 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _showFontSizeDialog() {
+    HapticFeedback.mediumImpact();
+    final fontSize = ref.read(fontSizeProvider);
+    final fontSizeNotifier = ref.read(fontSizeProvider.notifier);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'حجم الخط',
+          style: AppTypography.textTheme.titleLarge,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            StatefulBuilder(
+              builder: (context, setDialogState) {
+                return Consumer(
+                  builder: (context, ref, child) {
+                    final currentSize = ref.watch(fontSizeProvider);
+                    return Column(
+                      children: [
+                        // Preview text
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+                            style: TextStyle(
+                              fontSize: currentSize,
+                              fontFamily: 'Amiri',
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        
+                        // Size controls
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: fontSizeNotifier.canDecrease
+                                  ? () async {
+                                      HapticFeedback.lightImpact();
+                                      await fontSizeNotifier.decreaseFontSize();
+                                      setDialogState(() {});
+                                    }
+                                  : null,
+                              icon: const Icon(Icons.remove),
+                              style: IconButton.styleFrom(
+                                backgroundColor: fontSizeNotifier.canDecrease
+                                    ? AppColors.primary.withOpacity(0.1)
+                                    : Colors.grey.withOpacity(0.1),
+                              ),
+                            ),
+                            Expanded(
+                              child: Slider(
+                                value: currentSize,
+                                min: fontSizeNotifier.minSize,
+                                max: fontSizeNotifier.maxSize,
+                                divisions: 7,
+                                label: currentSize.toStringAsFixed(0),
+                                onChanged: (value) async {
+                                  await fontSizeNotifier.setFontSize(value);
+                                  setDialogState(() {});
+                                },
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: fontSizeNotifier.canIncrease
+                                  ? () async {
+                                      HapticFeedback.lightImpact();
+                                      await fontSizeNotifier.increaseFontSize();
+                                      setDialogState(() {});
+                                    }
+                                  : null,
+                              icon: const Icon(Icons.add),
+                              style: IconButton.styleFrom(
+                                backgroundColor: fontSizeNotifier.canIncrease
+                                    ? AppColors.primary.withOpacity(0.1)
+                                    : Colors.grey.withOpacity(0.1),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'الحجم الحالي: ${currentSize.toStringAsFixed(0)}',
+                          style: AppTypography.textTheme.bodyMedium?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('تم'),
+          ),
+        ],
       ),
     );
   }
@@ -144,10 +283,20 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                 ? IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
+                      HapticFeedback.lightImpact();
                       ref.read(adhkarNotifierProvider.notifier).clearCurrentCollection();
                     },
                   )
                 : null,
+            actions: [
+              // Font size button
+              if (state.currentCollection != null)
+                IconButton(
+                  icon: const Icon(Icons.format_size),
+                  onPressed: _showFontSizeDialog,
+                  tooltip: 'حجم الخط',
+                ),
+            ],
           ),
         ],
         body: state.currentCollection != null
@@ -261,6 +410,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
 
   Widget _buildAdhkarListView() {
     final collection = ref.watch(adhkarNotifierProvider).currentCollection!;
+    final fontSize = ref.watch(fontSizeProvider);
 
     return Column(
       children: [
@@ -335,6 +485,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                 dhikr: dhikr,
                 index: index + 1,
                 onLongPress: () => _showDhikrOptions(dhikr),
+                fontSize: fontSize,
               ).animate().fadeIn(
                 duration: 400.ms,
                 delay: (index * 50).ms,

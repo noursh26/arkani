@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/custom_transitions.dart';
 import '../../l10n/app_localizations.dart';
 import '../features/adhkar/presentation/pages/adhkar_page.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/mosques/presentation/pages/mosques_page.dart';
+import '../features/onboarding/presentation/pages/notification_permission_page.dart';
 import '../features/rulings/presentation/pages/rulings_page.dart';
 import '../features/splash/splash_screen.dart';
 
@@ -23,35 +25,70 @@ class AppRouter {
       GoRoute(
         path: '/splash',
         name: 'splash',
-        builder: (context, state) => const SplashScreen(),
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const SplashScreen(),
+          transitionsBuilder: CustomTransitions.fadeTransition,
+        ),
+      ),
+
+      // Notification Permission Screen
+      GoRoute(
+        path: '/notification-permission',
+        name: 'notification-permission',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const NotificationPermissionScreen(),
+          transitionsBuilder: CustomTransitions.slideTransition,
+        ),
       ),
       
       // Main app shell with bottom nav
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
-        builder: (context, state, child) {
-          return ScaffoldWithNavBar(child: child);
+        pageBuilder: (context, state, child) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: ScaffoldWithNavBar(child: child),
+            transitionsBuilder: CustomTransitions.fadeTransition,
+          );
         },
         routes: [
           GoRoute(
             path: '/',
             name: 'home',
-            builder: (context, state) => const HomePage(),
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const HomePage(),
+              transitionsBuilder: CustomTransitions.slideTransition,
+            ),
           ),
           GoRoute(
             path: '/adhkar',
             name: 'adhkar',
-            builder: (context, state) => const AdhkarPage(),
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const AdhkarPage(),
+              transitionsBuilder: CustomTransitions.slideTransition,
+            ),
           ),
           GoRoute(
             path: '/rulings',
             name: 'rulings',
-            builder: (context, state) => const RulingsPage(),
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const RulingsPage(),
+              transitionsBuilder: CustomTransitions.slideTransition,
+            ),
           ),
           GoRoute(
             path: '/mosques',
             name: 'mosques',
-            builder: (context, state) => const MosquesPage(),
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const MosquesPage(),
+              transitionsBuilder: CustomTransitions.slideTransition,
+            ),
           ),
         ],
       ),

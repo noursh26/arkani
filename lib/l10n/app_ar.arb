@@ -119,5 +119,24 @@
   "gregorianDate": "التاريخ الميلادي",
   "today": "اليوم",
   "tomorrow": "غداً",
-  "yesterday": "أمس"
+  "yesterday": "أمس",
+
+  "notificationPermissionTitle": "تنبيهات مهمة",
+  "notificationPermissionDescription": "نريد إرسال تنبيهات مهمة إليك",
+  "notificationPrayerReminders": "تذكير بمواقيت الصلاة",
+  "notificationAdhkarReminders": "تنبيهات الأذكار اليومية",
+  "notificationMotivational": "رسائل تحفيزية وأحاديث",
+  "notificationQiyam": "تذكير بقيام الليل",
+  "allowNotifications": "السماح بالتنبيهات",
+  "later": "لاحقاً",
+
+  "fontSize": "حجم الخط",
+  "fontSizeCurrent": "الحجم الحالي",
+  "copyDhikr": "نسخ الذكر",
+  "shareDhikr": "مشاركة الذكر",
+  "dhikrCopied": "تم نسخ الذكر",
+  "dhikrCount": "ذكر",
+
+  "azanTime": "حان وقت الصلاة",
+  "azanBody": "حان وقت صلاة {prayer}، استجب لنداء ربك 🕌"
 }

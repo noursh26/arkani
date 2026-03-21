@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -5,6 +6,10 @@ import '../../config/env_config.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/network/api_service.dart';
 import '../../core/utils/device_info_util.dart';
+
+/// Callback types for OneSignal events
+typedef OnNotificationReceived = void Function(String title, String body, String? type);
+typedef OnNotificationTapped = void Function(String? type);
 
 class OneSignalService {
   static final OneSignalService _instance = OneSignalService._internal();
@@ -15,6 +20,11 @@ class OneSignalService {
   ApiService? _apiService;
   bool _initialized = false;
 
+  // Callbacks for notification handling
+  OnNotificationReceived? onNotificationReceived;
+  OnNotificationTapped? onNotificationTapped;
+
+  /// Initialize OneSignal
   Future<void> initialize({ApiService? apiService}) async {
     if (_initialized) return;
 
@@ -28,8 +38,8 @@ class OneSignalService {
     // Initialize OneSignal
     OneSignal.initialize(EnvConfig.oneSignalAppId);
 
-    // Request notification permission
-    await OneSignal.Notifications.requestPermission(true);
+    // Set up notification event handlers
+    _setupNotificationHandlers();
 
     // Listen for subscription changes
     OneSignal.User.pushSubscription.addObserver((state) {
@@ -43,6 +53,58 @@ class OneSignalService {
     }
 
     _initialized = true;
+  }
+
+  /// Set up notification event handlers
+  void _setupNotificationHandlers() {
+    // Handle notification received while app is open
+    OneSignal.Notifications.addForegroundWillDisplayListener((event) {
+      event.preventDefault();
+
+      final title = event.notification.title ?? 'أركاني';
+      final body = event.notification.body ?? '';
+      final additionalData = event.notification.additionalData;
+      final type = additionalData?['type'] as String?;
+
+      if (kDebugMode) {
+        print('Notification received in foreground: $title - $body (type: $type)');
+      }
+
+      // Trigger the callback to show in-app snackbar
+      onNotificationReceived?.call(title, body, type);
+
+      // Display the notification
+      event.notification.display();
+    });
+
+    // Handle notification tap (when app is in background or closed)
+    OneSignal.Notifications.addClickListener((event) {
+      final additionalData = event.notification.additionalData;
+      final type = additionalData?['type'] as String?;
+
+      if (kDebugMode) {
+        print('Notification tapped (background/closed): type=$type');
+      }
+
+      // Trigger the callback for navigation
+      onNotificationTapped?.call(type);
+    });
+  }
+
+  /// Get the route based on notification type
+  static String? getRouteForNotificationType(String? type) {
+    switch (type) {
+      case 'khulq':
+        return '/'; // home
+      case 'nafl':
+        return '/'; // home
+      case 'dua':
+        return '/adhkar';
+      case 'reminder':
+        return '/';
+      default:
+        return '/';
+    }
   }
 
   void _onSubscriptionChanged(OSPushSubscriptionState state) async {
@@ -102,5 +164,28 @@ class OneSignalService {
   // Remove tag
   Future<void> removeTag(String key) async {
     await OneSignal.User.removeTag(key);
+  }
+
+  /// Check if permission has been requested before
+  Future<bool> hasRequestedPermission() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('onesignal_permission_requested') ?? false;
+  }
+
+  /// Mark permission as requested
+  Future<void> markPermissionRequested() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onesignal_permission_requested', true);
+  }
+
+  /// Request notification permission (native dialog)
+  Future<void> requestPermissionNative() async {
+    await OneSignal.Notifications.requestPermission(true);
+    await markPermissionRequested();
+  }
+
+  /// Get current notification permission status
+  Future<bool> hasNotificationPermission() async {
+    return OneSignal.Notifications.permission ?? false;
   }
 }

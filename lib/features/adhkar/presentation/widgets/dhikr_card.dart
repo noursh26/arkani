@@ -9,12 +9,14 @@ class DhikrCard extends StatefulWidget {
   final Dhikr dhikr;
   final int index;
   final VoidCallback? onLongPress;
+  final double fontSize;
 
   const DhikrCard({
     super.key,
     required this.dhikr,
     required this.index,
     this.onLongPress,
+    this.fontSize = 22.0,
   });
 
   @override
@@ -113,7 +115,7 @@ class _DhikrCardState extends State<DhikrCard> {
                 child: SelectableText(
                   widget.dhikr.text,
                   style: AppTypography.dhikrText.copyWith(
-                    fontSize: 22,
+                    fontSize: widget.fontSize,
                     fontWeight: FontWeight.w500,
                   ),
                   textAlign: TextAlign.center,

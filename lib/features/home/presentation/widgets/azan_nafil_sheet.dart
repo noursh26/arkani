@@ -44,7 +44,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.85,
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: Column(

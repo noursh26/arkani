@@ -4,9 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
-import '../core/theme/app_colors.dart';
-import '../core/theme/app_typography.dart';
-import '../core/utils/location_util.dart';
+import '../../core/services/onesignal_service.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_typography.dart';
+import '../../core/utils/location_util.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -52,8 +53,21 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     // Check location permission
     await _checkLocationPermission();
     
-    // Navigate to home
-    if (mounted) {
+    // Check notification permission and navigate accordingly
+    await _checkNotificationPermission();
+  }
+
+  Future<void> _checkNotificationPermission() async {
+    final oneSignalService = OneSignalService();
+    
+    // Check if permission has been requested before
+    final hasRequested = await oneSignalService.hasRequestedPermission();
+    
+    if (!hasRequested && mounted) {
+      // First launch - show notification permission screen
+      context.go('/notification-permission');
+    } else if (mounted) {
+      // Already requested or permission denied - go to home
       context.go('/');
     }
   }

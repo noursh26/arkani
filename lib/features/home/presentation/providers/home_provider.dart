@@ -4,10 +4,12 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../core/constants/app_constants.dart';
 import '../../../core/di/providers.dart';
 import '../../../core/errors/exceptions.dart';
+import '../../../core/services/local_notification_service.dart';
 import '../../../core/services/prayer_calculation_service.dart';
 import '../../../core/utils/location_util.dart';
 import '../../domain/entities/prayer_times.dart';
@@ -83,6 +85,9 @@ class HomeNotifier extends _$HomeNotifier {
       );
       
       _calculateNextPrayer(prayerTimes);
+      
+      // Schedule prayer notifications
+      await _schedulePrayerNotifications(prayerTimes);
     } on NetworkException catch (e) {
       // Try to use cached data first, then fallback to local calculation
       final cachedData = cacheBox.get(AppConstants.prayerTimesKey) as String?;
@@ -98,6 +103,7 @@ class HomeNotifier extends _$HomeNotifier {
             error: null,
           );
           _calculateNextPrayer(prayerTimes);
+          await _schedulePrayerNotifications(prayerTimes);
         } catch (_) {
           // Fall back to local calculation
           await _fallbackToLocalCalculation(cacheBox, today);
@@ -160,6 +166,9 @@ class HomeNotifier extends _$HomeNotifier {
           location.latitude != PrayerCalculationService.defaultLatitude,
       );
       _calculateNextPrayer(prayerTimes);
+      
+      // Schedule prayer notifications even with local calculation
+      await _schedulePrayerNotifications(prayerTimes);
     } catch (localError) {
       state = state.copyWith(
         isLoading: false,
@@ -211,6 +220,35 @@ class HomeNotifier extends _$HomeNotifier {
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _calculateNextPrayer(prayerTimes);
     });
+  }
+
+  Future<void> _schedulePrayerNotifications(PrayerTimes prayerTimes) async {
+    try {
+      final today = DateTime.now().toIso8601String().split('T')[0];
+      
+      // Parse prayer times and schedule notifications
+      final fajrTime = DateTime.parse('$today ${prayerTimes.fajr}');
+      final dhuhrTime = DateTime.parse('$today ${prayerTimes.dhuhr}');
+      final asrTime = DateTime.parse('$today ${prayerTimes.asr}');
+      final maghribTime = DateTime.parse('$today ${prayerTimes.maghrib}');
+      final ishaTime = DateTime.parse('$today ${prayerTimes.isha}');
+
+      await LocalNotificationService().scheduleDailyPrayers(
+        fajrTime: fajrTime,
+        dhuhrTime: dhuhrTime,
+        asrTime: asrTime,
+        maghribTime: maghribTime,
+        ishaTime: ishaTime,
+      );
+
+      if (kDebugMode) {
+        print('Prayer notifications scheduled successfully');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Failed to schedule prayer notifications: $e');
+      }
+    }
   }
 
   Future<void> loadTodayNotification() async {

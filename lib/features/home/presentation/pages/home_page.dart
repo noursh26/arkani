@@ -5,6 +5,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
+import '../../../core/services/onesignal_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/utils/location_util.dart';
@@ -123,6 +125,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   void _showAzanNafilSheet() {
+    // Haptic feedback on button tap
+    HapticFeedback.mediumImpact();
+    
     final currentPrayer = _getCurrentPrayerForMessage();
     showModalBottomSheet(
       context: context,
