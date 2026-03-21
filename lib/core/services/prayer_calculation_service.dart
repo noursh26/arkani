@@ -1,4 +1,4 @@
-import 'package:adhan/adhan.dart';
+import 'package:adhan/adhan.dart' as adhan;
 import 'package:intl/intl.dart';
 
 import '../../features/home/domain/entities/prayer_times.dart';
@@ -16,26 +16,26 @@ class PrayerCalculationService {
   static const double defaultLongitude = 46.6753;
 
   /// Calculation method - Muslim World League
-  static const CalculationMethod calculationMethod = CalculationMethod.muslim_world_league;
+  static const adhan.CalculationMethod calculationMethod = adhan.CalculationMethod.muslim_world_league;
 
   /// Calculate prayer times for a specific date and location
-  static PrayerTimes calculatePrayerTimes({
+  static adhan.PrayerTimes calculatePrayerTimes({
     required double latitude,
     required double longitude,
     DateTime? date,
   }) {
-    final coordinates = Coordinates(latitude, longitude);
+    final coordinates = adhan.Coordinates(latitude, longitude);
     final params = calculationMethod.getParameters();
-    params.madhab = Madhab.shafi;
+    params.madhab = adhan.Madhab.shafi;
     
     final prayerDate = date ?? DateTime.now();
-    final dateComponents = DateComponents(prayerDate.year, prayerDate.month, prayerDate.day);
+    final dateComponents = adhan.DateComponents(prayerDate.year, prayerDate.month, prayerDate.day);
     
-    return PrayerTimes(coordinates, dateComponents, params);
+    return adhan.PrayerTimes(coordinates, dateComponents, params);
   }
 
   /// Calculate prayer times and convert to PrayerTimes entity
-  static PrayerTimesEntity calculatePrayerTimesEntity({
+  static PrayerTimes calculatePrayerTimesEntity({
     double? latitude,
     double? longitude,
     DateTime? date,
@@ -54,7 +54,7 @@ class PrayerCalculationService {
     final prayerDate = date ?? DateTime.now();
     final timeFormat = DateFormat('HH:mm');
     
-    return PrayerTimesEntity(
+    return PrayerTimes(
       fajr: timeFormat.format(adhanPrayerTimes.fajr),
       sunrise: timeFormat.format(adhanPrayerTimes.sunrise),
       dhuhr: timeFormat.format(adhanPrayerTimes.dhuhr),
@@ -69,7 +69,7 @@ class PrayerCalculationService {
   }
 
   /// Get current prayer time
-  static Prayer? getCurrentPrayer({
+  static adhan.Prayer? getCurrentPrayer({
     double? latitude,
     double? longitude,
     DateTime? date,
@@ -83,7 +83,7 @@ class PrayerCalculationService {
   }
 
   /// Get next prayer time
-  static Prayer getNextPrayer({
+  static adhan.Prayer getNextPrayer({
     double? latitude,
     double? longitude,
     DateTime? date,
@@ -98,7 +98,7 @@ class PrayerCalculationService {
 
   /// Get time for a specific prayer
   static DateTime? getPrayerTime({
-    required Prayer prayer,
+    required adhan.Prayer prayer,
     double? latitude,
     double? longitude,
     DateTime? date,
@@ -110,17 +110,17 @@ class PrayerCalculationService {
     );
     
     switch (prayer) {
-      case Prayer.fajr:
+      case adhan.Prayer.fajr:
         return prayerTimes.fajr;
-      case Prayer.sunrise:
+      case adhan.Prayer.sunrise:
         return prayerTimes.sunrise;
-      case Prayer.dhuhr:
+      case adhan.Prayer.dhuhr:
         return prayerTimes.dhuhr;
-      case Prayer.asr:
+      case adhan.Prayer.asr:
         return prayerTimes.asr;
-      case Prayer.maghrib:
+      case adhan.Prayer.maghrib:
         return prayerTimes.maghrib;
-      case Prayer.isha:
+      case adhan.Prayer.isha:
         return prayerTimes.isha;
       default:
         return null;
@@ -128,19 +128,19 @@ class PrayerCalculationService {
   }
 
   /// Convert adhan Prayer enum to Arabic name
-  static String prayerToArabic(Prayer prayer) {
+  static String prayerToArabic(adhan.Prayer prayer) {
     switch (prayer) {
-      case Prayer.fajr:
+      case adhan.Prayer.fajr:
         return 'الفجر';
-      case Prayer.sunrise:
+      case adhan.Prayer.sunrise:
         return 'الشروق';
-      case Prayer.dhuhr:
+      case adhan.Prayer.dhuhr:
         return 'الظهر';
-      case Prayer.asr:
+      case adhan.Prayer.asr:
         return 'العصر';
-      case Prayer.maghrib:
+      case adhan.Prayer.maghrib:
         return 'المغرب';
-      case Prayer.isha:
+      case adhan.Prayer.isha:
         return 'العشاء';
       default:
         return 'الفجر';
