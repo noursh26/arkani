@@ -17,14 +17,10 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-    <!-- Vibration for adhkar -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-
     <application
         android:label="@string/app_name"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:usesCleartextTraffic="true"
