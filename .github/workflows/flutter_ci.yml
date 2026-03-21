@@ -34,7 +34,12 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Get Dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          flutter clean
+          rm -rf android/.gradle
+          rm -rf android/app/build
+          rm -rf ~/.gradle/caches/transforms-*
 
       - name: Generate Build Files
         run: dart run build_runner build --delete-conflicting-outputs
@@ -81,7 +86,12 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Get Dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          flutter clean
+          rm -rf android/.gradle
+          rm -rf android/app/build
+          rm -rf ~/.gradle/caches/transforms-*
 
       - name: Generate Build Files
         run: dart run build_runner build --delete-conflicting-outputs
