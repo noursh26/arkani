@@ -39,9 +39,9 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-v2-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle-v2-
 
       - name: Get Dependencies
         run: |
@@ -49,7 +49,8 @@ jobs:
           flutter clean
           rm -rf android/.gradle
           rm -rf android/app/build
-          rm -rf ~/.gradle/caches/transforms-*
+          rm -rf ~/.gradle/caches
+          rm -rf ~/.gradle/wrapper
 
       - name: Generate Build Files
         run: dart run build_runner build --delete-conflicting-outputs
@@ -101,9 +102,9 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-v2-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle-v2-
 
       - name: Get Dependencies
         run: |
@@ -111,7 +112,8 @@ jobs:
           flutter clean
           rm -rf android/.gradle
           rm -rf android/app/build
-          rm -rf ~/.gradle/caches/transforms-*
+          rm -rf ~/.gradle/caches
+          rm -rf ~/.gradle/wrapper
 
       - name: Generate Build Files
         run: dart run build_runner build --delete-conflicting-outputs
