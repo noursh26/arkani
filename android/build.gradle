@@ -21,6 +21,17 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
+// Force kotlin-stdlib to match compiler version (prevents 2.2.0 pulled by transitive deps)
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+            force 'org.jetbrains.kotlin:kotlin-stdlib:1.9.22'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22'
+        }
+    }
+}
+
 subprojects { subproject ->
     subproject.pluginManager.withPlugin('com.android.library') {
         def androidExt = subproject.extensions.findByName('android')
