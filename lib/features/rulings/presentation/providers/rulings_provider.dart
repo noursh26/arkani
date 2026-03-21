@@ -54,10 +54,8 @@ class RulingsNotifier extends _$RulingsNotifier {
 
     try {
       final apiService = ref.read(apiServiceProvider);
-      final response = await apiService.getRulingTopics();
-
-      final data = response['data'] as List<dynamic>;
-      final topics = data
+      final data = await apiService.getRulingTopics();
+      final topics = (data as List<dynamic>)
           .map((e) => RulingTopic.fromJson(e as Map<String, dynamic>))
           .toList();
 
@@ -70,7 +68,7 @@ class RulingsNotifier extends _$RulingsNotifier {
         isOffline: false,
         error: null,
       );
-    } on NetworkException catch (e) {
+    } on NetworkException catch (_) {
       // Try to use cached data if available
       final cachedData = cacheBox.get(AppConstants.rulingsTopicsKey) as String?;
       if (cachedData != null) {
@@ -180,7 +178,7 @@ class RulingsNotifier extends _$RulingsNotifier {
         isOffline: false,
         error: null,
       );
-    } on NetworkException catch (e) {
+    } on NetworkException catch (_) {
       // Try to use cached data for first page
       if (page == 1) {
         final cachedData = cacheBox.get(cacheKey) as String?;

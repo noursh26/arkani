@@ -87,7 +87,7 @@ class HomeNotifier extends _$HomeNotifier {
       
       // Schedule prayer notifications
       await _schedulePrayerNotifications(prayerTimes);
-    } on NetworkException catch (e) {
+    } on NetworkException catch (_) {
       // Try to use cached data first, then fallback to local calculation
       final cachedData = cacheBox.get(AppConstants.prayerTimesKey) as String?;
       if (cachedData != null) {
@@ -273,7 +273,7 @@ class HomeNotifier extends _$HomeNotifier {
 
     try {
       final apiService = ref.read(apiServiceProvider);
-      final response = await apiService.getRandomMessage(prayerTime: prayerTime);
+      final response = await apiService.getRandomMessage(prayer: prayerTime);
 
       state = state.copyWith(
         motivationalLoading: false,

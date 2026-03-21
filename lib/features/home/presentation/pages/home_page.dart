@@ -1,15 +1,18 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/widgets/error_state_widget.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/prayer_times.dart';
 import '../providers/home_provider.dart';
+import '../providers/home_state.dart';
 import '../widgets/azan_nafil_sheet.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/home_skeleton_loading.dart';

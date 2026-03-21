@@ -1,4 +1,5 @@
 import 'package:geolocator/geolocator.dart';
+
 import '../constants/app_constants.dart';
 
 class LocationData {

@@ -47,10 +47,8 @@ class AdhkarNotifier extends _$AdhkarNotifier {
 
     try {
       final apiService = ref.read(apiServiceProvider);
-      final response = await apiService.getAdhkarCategories();
-
-      final data = response['data'] as List<dynamic>;
-      final categories = data
+      final data = await apiService.getAdhkarCategories();
+      final categories = (data as List<dynamic>)
           .map((e) => AdhkarCategory.fromJson(e as Map<String, dynamic>))
           .toList();
 
@@ -63,7 +61,7 @@ class AdhkarNotifier extends _$AdhkarNotifier {
         isOffline: false,
         error: null,
       );
-    } on NetworkException catch (e) {
+    } on NetworkException catch (_) {
       // Try to use cached data if available
       final cachedData = cacheBox.get(AppConstants.adhkarCategoriesKey) as String?;
       if (cachedData != null) {
@@ -119,7 +117,7 @@ class AdhkarNotifier extends _$AdhkarNotifier {
               .map((e) => Dhikr.fromJson(e as Map<String, dynamic>))
               .toList();
           state = state.copyWith(
-            currentCollection: AdhkarCollection(adhkar: adhkar, category: AdhkarCategory(slug: slug)),
+            currentCollection: AdhkarCollection(adhkar: adhkar, category: AdhkarCategory(id: 0, name: slug, slug: slug, icon: '', adhkarCount: adhkar.length)),
             isLoadingAdhkar: false,
             isOffline: false,
             error: null,
@@ -147,11 +145,11 @@ class AdhkarNotifier extends _$AdhkarNotifier {
 
       state = state.copyWith(
         isLoadingAdhkar: false,
-        currentCollection: AdhkarCollection(adhkar: adhkar, category: AdhkarCategory(slug: slug)),
+        currentCollection: AdhkarCollection(adhkar: adhkar, category: AdhkarCategory(id: 0, name: slug, slug: slug, icon: '', adhkarCount: adhkar.length)),
         isOffline: false,
         error: null,
       );
-    } on NetworkException catch (e) {
+    } on NetworkException catch (_) {
       // Try to use cached data if available
       final cachedData = cacheBox.get(cacheKey) as String?;
       if (cachedData != null) {
@@ -162,7 +160,7 @@ class AdhkarNotifier extends _$AdhkarNotifier {
               .toList();
           state = state.copyWith(
             isLoadingAdhkar: false,
-            currentCollection: AdhkarCollection(adhkar: adhkar, category: AdhkarCategory(slug: slug)),
+            currentCollection: AdhkarCollection(adhkar: adhkar, category: AdhkarCategory(id: 0, name: slug, slug: slug, icon: '', adhkarCount: adhkar.length)),
             isOffline: true,
             error: null,
           );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../domain/entities/prayer_times.dart';
@@ -37,7 +38,7 @@ class PrayerTimesStrip extends StatelessWidget {
       }
     }
 
-    return Container(
+    return SizedBox(
       height: 100,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,

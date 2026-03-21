@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+
 import '../../../../core/theme/app_colors.dart';
 
 class HomeSkeletonLoading extends StatelessWidget {
@@ -26,7 +27,7 @@ class HomeSkeletonLoading extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Prayer Strip Skeleton
-            Container(
+            SizedBox(
               height: 100,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,

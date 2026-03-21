@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../core/theme/app_colors.dart';
 import '../core/utils/custom_transitions.dart';
-import '../l10n/app_localizations.dart';
 import '../features/adhkar/presentation/pages/adhkar_page.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/mosques/presentation/pages/mosques_page.dart';
 import '../features/onboarding/presentation/pages/notification_permission_page.dart';
 import '../features/rulings/presentation/pages/rulings_page.dart';
 import '../features/splash/splash_screen.dart';
+import '../l10n/app_localizations.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();

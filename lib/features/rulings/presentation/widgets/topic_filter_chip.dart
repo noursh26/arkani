@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 
@@ -39,7 +40,7 @@ class TopicFilterChip extends StatelessWidget {
       ),
       backgroundColor: AppColors.surface,
       selectedColor: AppColors.primaryContainer,
-      checkColor: AppColors.primary,
+      checkmarkColor: AppColors.primary,
       side: BorderSide(
         color: isSelected ? AppColors.primary : AppColors.divider,
         width: 1,

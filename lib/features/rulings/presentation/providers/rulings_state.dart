@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../domain/entities/islamic_ruling.dart';
 
 part 'rulings_state.freezed.dart';

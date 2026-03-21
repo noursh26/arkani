@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/di/providers.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -69,7 +70,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
                 onPressed: () => Navigator.pop(context),
                 icon: Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColors.divider,
                     shape: BoxShape.circle,
                   ),
@@ -173,7 +174,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.format_quote,
                 color: AppColors.secondary,
                 size: 24,
@@ -226,7 +227,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
                   color: AppColors.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.menu_book,
                   color: AppColors.primary,
                   size: 20,
@@ -335,7 +336,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
                   color: AppColors.success.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.favorite,
                   color: AppColors.success,
                   size: 20,

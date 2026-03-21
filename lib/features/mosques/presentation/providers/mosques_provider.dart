@@ -6,7 +6,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/di/providers.dart';
 import '../../../../core/errors/exceptions.dart';
-import '../../../../core/utils/location_util.dart';
 import '../../domain/entities/mosque.dart';
 import 'mosques_state.dart';
 
@@ -90,7 +89,7 @@ class MosquesNotifier extends _$MosquesNotifier {
         isOffline: false,
         error: null,
       );
-    } on NetworkException catch (e) {
+    } on NetworkException catch (_) {
       // Try to use cached data even if expired
       final cachedData = cacheBox.get(AppConstants.mosquesKey) as String?;
       if (cachedData != null) {

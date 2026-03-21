@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../domain/entities/prayer_times.dart';
 
 part 'home_state.freezed.dart';

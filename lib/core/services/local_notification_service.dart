@@ -100,8 +100,8 @@ class LocalNotificationService {
       priority: Priority.high,
       playSound: true,
       enableVibration: true,
-      sound: const RawResourceAndroidNotificationSound('adhan'),
-      styleInformation: const BigTextStyleInformation(''),
+      sound: RawResourceAndroidNotificationSound('adhan'),
+      styleInformation: BigTextStyleInformation(''),
       autoCancel: true,
     );
 
@@ -112,7 +112,7 @@ class LocalNotificationService {
       sound: 'adhan.caf',
     );
 
-    final notificationDetails = NotificationDetails(
+    const notificationDetails = NotificationDetails(
       android: androidDetails,
       iOS: darwinDetails,
     );

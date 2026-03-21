@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
+import '../../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
-import '../../l10n/app_localizations.dart';
 
 class ErrorStateWidget extends StatelessWidget {
   final String? message;

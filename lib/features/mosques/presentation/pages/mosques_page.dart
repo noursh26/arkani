@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../core/constants/app_constants.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../core/utils/location_util.dart';
 import '../../../../core/widgets/error_state_widget.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/mosque.dart';
 import '../providers/mosques_provider.dart';
-import '../widgets/mosque_list_item.dart';
 import '../widgets/location_permission_widget.dart';
+import '../widgets/mosque_list_item.dart';
 
 class MosquesPage extends ConsumerStatefulWidget {
   const MosquesPage({super.key});
@@ -68,14 +66,6 @@ class _MosquesPageState extends ConsumerState<MosquesPage> {
       backgroundColor: Colors.transparent,
       builder: (context) => _MosqueDetailSheet(mosque: mosque),
     );
-  }
-
-  Future<void> _openDirections(Mosque mosque) async {
-    final url = 'https://www.google.com/maps/dir/?api=1&destination=${mosque.latitude},${mosque.longitude}';
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
   }
 
   @override
@@ -245,7 +235,7 @@ class _MosquesPageState extends ConsumerState<MosquesPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.mosque_outlined,
             size: 64,
             color: AppColors.textTertiary,
@@ -366,7 +356,7 @@ class _MosqueDetailSheet extends StatelessWidget {
             // Address
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.location_on,
                   color: AppColors.textSecondary,
                   size: 20,
@@ -388,7 +378,7 @@ class _MosqueDetailSheet extends StatelessWidget {
               const SizedBox(height: 12),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.star,
                     color: AppColors.secondary,
                     size: 20,

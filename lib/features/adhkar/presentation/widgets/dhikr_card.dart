@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../domain/entities/adhkar_category.dart';
@@ -187,7 +188,7 @@ class _DhikrCardState extends State<DhikrCard> {
               ),
               if (isCompleted) ...[
                 const SizedBox(width: 8),
-                Icon(
+                const Icon(
                   Icons.check_circle,
                   color: AppColors.success,
                   size: 24,

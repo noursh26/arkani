@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../domain/entities/adhkar_category.dart';
 
 part 'adhkar_state.freezed.dart';

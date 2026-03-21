@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../core/services/onesignal_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
-import '../../core/utils/location_util.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -77,14 +76,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     _locationChecked = true;
 
     // Check if location services are enabled
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       // Don't block, just continue with default location
       return;
     }
 
     // Check permission
-    LocationPermission permission = await Geolocator.checkPermission();
+    var permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
     }
@@ -121,7 +120,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                     ),
                   );
                 },
-                child: _MosqueSilhouette(size: 180),
+                child: const _MosqueSilhouette(size: 180),
               ),
               
               const SizedBox(height: 40),
@@ -163,7 +162,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
               
               // Loading indicator
               if (_textController.isCompleted)
-                CircularProgressIndicator(
+                const CircularProgressIndicator(
                   color: AppColors.primary,
                   strokeWidth: 2,
                 ).animate().fadeIn(duration: 300.ms),

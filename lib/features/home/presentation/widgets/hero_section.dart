@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../domain/entities/prayer_times.dart';
@@ -70,7 +71,7 @@ class HeroSection extends StatelessWidget {
                 Row(
                   children: [
                     _buildDateBadge(
-                      hijri.toFormat("dd MMMM yyyy"),
+                      hijri.toFormat('dd MMMM yyyy'),
                       Icons.calendar_today,
                     ),
                     const SizedBox(width: 8),
@@ -148,9 +149,9 @@ class _MosquePatternPainter extends CustomPainter {
       ..color = AppColors.onPrimary.withOpacity(0.03)
       ..style = PaintingStyle.fill;
 
-    final mosqueWidth = 60.0;
-    final mosqueHeight = 70.0;
-    final spacing = 40.0;
+    const mosqueWidth = 60.0;
+    const mosqueHeight = 70.0;
+    const spacing = 40.0;
 
     for (double x = 0; x < size.width + mosqueWidth; x += mosqueWidth + spacing) {
       _drawMosque(canvas, Offset(x, size.height - mosqueHeight - 20), mosqueWidth, mosqueHeight, paint);

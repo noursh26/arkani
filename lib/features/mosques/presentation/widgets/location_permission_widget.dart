@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../providers/mosques_provider.dart';
 
 class LocationPermissionWidget extends StatelessWidget {
   const LocationPermissionWidget({super.key});
@@ -21,7 +21,7 @@ class LocationPermissionWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.location_off,
                 color: AppColors.warning,
                 size: 24,

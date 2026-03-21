@@ -1,10 +1,12 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
+
 import '../../../../core/providers/settings_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -12,6 +14,7 @@ import '../../../../core/widgets/error_state_widget.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/adhkar_category.dart';
 import '../providers/adhkar_provider.dart';
+import '../providers/adhkar_state.dart';
 import '../widgets/category_grid_item.dart';
 import '../widgets/dhikr_card.dart';
 
@@ -125,7 +128,6 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
 
   void _showFontSizeDialog() {
     HapticFeedback.mediumImpact();
-    final fontSize = ref.read(fontSizeProvider);
     final fontSizeNotifier = ref.read(fontSizeProvider.notifier);
 
     showDialog(
