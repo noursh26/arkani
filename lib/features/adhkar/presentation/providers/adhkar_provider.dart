@@ -48,7 +48,7 @@ class AdhkarNotifier extends _$AdhkarNotifier {
     try {
       final apiService = ref.read(apiServiceProvider);
       final data = await apiService.getAdhkarCategories();
-      final categories = (data as List<dynamic>)
+      final categories = data
           .map((e) => AdhkarCategory.fromJson(e as Map<String, dynamic>))
           .toList();
 

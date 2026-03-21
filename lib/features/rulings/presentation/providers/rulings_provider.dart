@@ -55,7 +55,7 @@ class RulingsNotifier extends _$RulingsNotifier {
     try {
       final apiService = ref.read(apiServiceProvider);
       final data = await apiService.getRulingTopics();
-      final topics = (data as List<dynamic>)
+      final topics = data
           .map((e) => RulingTopic.fromJson(e as Map<String, dynamic>))
           .toList();
 

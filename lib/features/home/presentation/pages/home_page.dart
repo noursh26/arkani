@@ -244,8 +244,8 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: Container(
             width: 140,
             height: 140,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
                 colors: [AppColors.primary, AppColors.primaryDark],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,

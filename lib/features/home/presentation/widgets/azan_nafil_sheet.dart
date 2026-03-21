@@ -104,7 +104,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
                           ),
                           child: Column(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.notifications_active,
                                 color: AppColors.onPrimary,
                                 size: 40,
