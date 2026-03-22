@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -12,6 +13,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/widgets/error_state_widget.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../location/presentation/providers/location_provider.dart';
 import '../../domain/entities/prayer_times.dart';
 import '../providers/home_provider.dart';
 import '../providers/home_state.dart';
@@ -425,25 +427,56 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
             ),
 
-          // Location info and timezone selector
-          if (state.prayerTimes?.city != null) ...[
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.white.withValues(alpha: 0.5),
-                  size: 12,
-                ),
-                const SizedBox(width: 3),
-                Text(
-                  '${state.prayerTimes!.city}${state.prayerTimes?.country != null ? '، ${state.prayerTimes!.country}' : ''}',
-                  style: AppTypography.textTheme.bodySmall?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.5),
-                    fontSize: 10,
+          // Location info and change location button
+          Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => context.push('/select-location'),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                        color: Colors.white.withValues(alpha: 0.5),
+                        size: 12,
+                      ),
+                      const SizedBox(width: 3),
+                      Expanded(
+                        child: Consumer(
+                          builder: (context, ref, child) {
+                            final savedLocation = ref.watch(savedLocationProvider);
+                            return savedLocation.when(
+                              data: (location) => Text(
+                                location?.displayName ?? 'لم يتم تحديد الموقع',
+                                style: AppTypography.textTheme.bodySmall?.copyWith(
+                                  color: Colors.white.withValues(alpha: 0.7),
+                                  fontSize: 10,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              loading: () => const SizedBox.shrink(),
+                              error: (_, __) => Text(
+                                'خطأ في تحديد الموقع',
+                                style: AppTypography.textTheme.bodySmall?.copyWith(
+                                  color: Colors.white.withValues(alpha: 0.5),
+                                  fontSize: 10,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        Icons.edit_location_alt_outlined,
+                        color: Colors.white.withValues(alpha: 0.6),
+                        size: 12,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 8),
+              ),
                 // Timezone selector
                 GestureDetector(
                   onTap: _showTimezoneDialog,
@@ -499,7 +532,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               ],
             ),
           ],
-        ],
       ),
     );
   }

@@ -168,19 +168,13 @@ class RulingsNotifier extends _$RulingsNotifier {
           isLoadingMore: false,
           rulings: refresh ? [] : state.rulings,
           hasMore: false,
-        state = state.copyWith(
-          isLoadingRulings: false,
-          isLoadingMore: false,
-          rulings: refresh ? [] : state.rulings,
-          hasMore: false,
-          error: null, // Consider logging: 'No data received from API'
-        );
+          error: null,
         );
         return;
       }
 
       final data = response['data'] as Map<String, dynamic>?;
-      final paginated = RulingsPaginated.fromJson(data);
+      if (data == null) {
         state = state.copyWith(
           isLoadingRulings: false,
           isLoadingMore: false,

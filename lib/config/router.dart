@@ -5,6 +5,8 @@ import '../core/theme/app_colors.dart';
 import '../core/utils/custom_transitions.dart';
 import '../features/adhkar/presentation/pages/adhkar_page.dart';
 import '../features/home/presentation/pages/home_page.dart';
+import '../features/location/presentation/pages/prayer_times_page.dart';
+import '../features/location/presentation/pages/select_location_page.dart';
 import '../features/mosques/presentation/pages/mosques_page.dart';
 import '../features/onboarding/presentation/pages/notification_permission_page.dart';
 import '../features/rulings/presentation/pages/rulings_page.dart';
@@ -78,6 +80,24 @@ class AppRouter {
             pageBuilder: (context, state) => CustomTransitionPage(
               key: state.pageKey,
               child: const RulingsPage(),
+              transitionsBuilder: CustomTransitions.slideTransition,
+            ),
+          ),
+          GoRoute(
+            path: '/prayer-times',
+            name: 'prayer-times',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const PrayerTimesPage(),
+              transitionsBuilder: CustomTransitions.slideTransition,
+            ),
+          ),
+          GoRoute(
+            path: '/select-location',
+            name: 'select-location',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const SelectLocationPage(),
               transitionsBuilder: CustomTransitions.slideTransition,
             ),
           ),
