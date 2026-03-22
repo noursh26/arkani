@@ -4,7 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/services/onesignal_service.dart';
+import '../../core/services/notification_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 
@@ -57,10 +57,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   Future<void> _checkNotificationPermission() async {
-    final oneSignalService = OneSignalService();
+    final notificationService = NotificationService();
     
     // Check if permission has been requested before
-    final hasRequested = await oneSignalService.hasRequestedPermission();
+    final hasRequested = await notificationService.hasRequestedPermission();
     
     if (!hasRequested && mounted) {
       // First launch - show notification permission screen

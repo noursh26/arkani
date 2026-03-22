@@ -23,7 +23,6 @@ class AppConstants {
 
   // Keys
   static const String deviceUuidKey = 'device_uuid';
-  static const String oneSignalPlayerIdKey = 'onesignal_player_id';
   static const String lastCacheClearKey = 'last_cache_clear';
   static const String prayerMethodKey = 'prayer_method';
   static const String userLocationKey = 'user_location';

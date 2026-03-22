@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../network/api_service.dart';
 import '../network/dio_client.dart';
-import '../services/onesignal_service.dart';
+import '../services/notification_service.dart';
 import '../utils/device_info_util.dart';
 import '../utils/device_uuid_util.dart';
 import '../utils/location_util.dart';
@@ -18,9 +18,8 @@ final apiServiceProvider = Provider<ApiService>((ref) {
 });
 
 // Services
-final oneSignalServiceProvider = Provider<OneSignalService>((ref) {
-  final service = OneSignalService();
-  // Initialize with API service when ready
+final notificationServiceProvider = Provider<NotificationService>((ref) {
+  final service = NotificationService();
   ref.onDispose(() {
     // Cleanup if needed
   });

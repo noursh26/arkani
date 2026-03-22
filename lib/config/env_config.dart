@@ -28,7 +28,6 @@ class EnvConfig {
 
   static String get appName => _getOrDefault('APP_NAME', 'أركاني');
   static String get apiBaseUrl => _getOrDefault('API_BASE_URL', 'http://localhost:8000/api');
-  static String get oneSignalAppId => _getOrDefault('ONESIGNAL_APP_ID', '');
 
   static String _getOrDefault(String key, String defaultValue) {
     if (!_initialized) {

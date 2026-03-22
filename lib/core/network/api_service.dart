@@ -10,26 +10,6 @@ class ApiService {
 
   Dio get _dio => _dioClient.dio;
 
-  // ==================== DEVICE ENDPOINTS ====================
-  
-  /// POST /api/v1/devices/register
-  /// Register device with OneSignal player ID
-  Future<Map<String, dynamic>> registerDevice({
-    required String deviceId,
-    required String playerId,
-    required String platform,
-    String? appVersion,
-  }) async {
-    return _requestWithRetry(
-      () => _post('devices/register', data: {
-        'device_id': deviceId,
-        'player_id': playerId,
-        'platform': platform,
-        'app_version': appVersion,
-      }),
-    );
-  }
-
   // ==================== PRAYER ENDPOINTS ====================
   
   /// GET /api/v1/prayers/times

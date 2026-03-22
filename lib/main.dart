@@ -8,8 +8,7 @@ import 'config/env_config.dart';
 import 'config/router.dart';
 import 'core/constants/app_constants.dart';
 import 'core/database/hive_config.dart';
-import 'core/services/local_notification_service.dart';
-import 'core/services/onesignal_service.dart';
+import 'core/services/notification_service.dart';
 import 'core/theme/app_theme.dart';
 import 'l10n/app_localizations.dart';
 
@@ -25,12 +24,9 @@ void main() async {
   // Initialize Hive
   await HiveConfig.initialize();
 
-  // Initialize OneSignal
-  final oneSignalService = OneSignalService();
-  await oneSignalService.initialize();
-
-  // Initialize Local Notifications
-  await LocalNotificationService().initialize();
+  // Initialize Notification Service
+  final notificationService = NotificationService();
+  await notificationService.initialize();
 
   runApp(
     const ProviderScope(
@@ -47,23 +43,23 @@ class ArkaniApp extends ConsumerStatefulWidget {
 }
 
 class _ArkaniAppState extends ConsumerState<ArkaniApp> {
-  final _oneSignalService = OneSignalService();
+  final _notificationService = NotificationService();
 
   @override
   void initState() {
     super.initState();
-    _setupOneSignalCallbacks();
+    _setupNotificationCallbacks();
   }
 
-  void _setupOneSignalCallbacks() {
+  void _setupNotificationCallbacks() {
     // Handle notification received while app is open
-    _oneSignalService.onNotificationReceived = (title, body, type) {
+    _notificationService.onNotificationReceived = (title, body, type) {
       _showInAppNotification(title, body);
     };
 
     // Handle notification tap when app is in background/closed
-    _oneSignalService.onNotificationTapped = (type) {
-      final route = OneSignalService.getRouteForNotificationType(type);
+    _notificationService.onNotificationTapped = (type) {
+      final route = NotificationService.getRouteForNotificationType(type);
       if (route != null && mounted) {
         context.go(route);
       }

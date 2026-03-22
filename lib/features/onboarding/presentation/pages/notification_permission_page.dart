@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../../../core/services/onesignal_service.dart';
+import '../../../../core/services/notification_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 
@@ -28,15 +28,15 @@ class _NotificationPermissionScreenState extends ConsumerState<NotificationPermi
       // Request notification permission
       final status = await Permission.notification.request();
       
-      final oneSignalService = OneSignalService();
+      final notificationService = NotificationService();
       
       if (status.isGranted) {
-        // Also request OneSignal permission
-        await oneSignalService.requestPermissionNative();
+        // Request notification permissions
+        await notificationService.requestPermissions();
       }
 
       // Mark as requested regardless of outcome
-      await oneSignalService.markPermissionRequested();
+      await notificationService.markPermissionRequested();
 
       if (mounted) {
         context.go('/');
@@ -51,8 +51,8 @@ class _NotificationPermissionScreenState extends ConsumerState<NotificationPermi
   }
 
   Future<void> _skip() async {
-    final oneSignalService = OneSignalService();
-    await oneSignalService.markPermissionRequested();
+    final notificationService = NotificationService();
+    await notificationService.markPermissionRequested();
     
     if (mounted) {
       context.go('/');
