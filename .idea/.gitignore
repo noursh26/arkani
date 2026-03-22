@@ -1,0 +1,19 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Flutter/Dart
+/.dart_tool/
+/.packages
+/.pub/
+/build/
+*.iml
+*.ipr
+*.iws
+.idea/libraries/
+.idea/modules.xml
+.idea/runConfigurations.xml
+.idea/caches/
+.idea/dictionaries/
+.idea/jarRepositories.xml
+.idea/misc.xml
+.idea/vcs.xml

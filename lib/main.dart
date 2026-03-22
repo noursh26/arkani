@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 
 import 'config/env_config.dart';
 import 'config/router.dart';
@@ -17,6 +19,10 @@ void main() async {
 
   // Set system UI style
   SystemChrome.setSystemUIOverlayStyle(AppConstants.systemUiOverlayStyle);
+
+  // Initialize timezone data
+  tz_data.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Africa/Cairo'));
 
   // Initialize environment
   await EnvConfig.initialize(Environment.development);
