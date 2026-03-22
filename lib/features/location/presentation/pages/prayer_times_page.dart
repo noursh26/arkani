@@ -96,7 +96,7 @@ class PrayerTimesPage extends ConsumerWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       AppColors.primary,
-                      AppColors.primary.withOpacity(0.8),
+                      AppColors.primary.withValues(alpha:0.8),
                     ],
                   ),
                 ),
@@ -352,13 +352,13 @@ class PrayerTimesPage extends ConsumerWidget {
         gradient: LinearGradient(
           colors: [
             AppColors.primary,
-            AppColors.primary.withOpacity(0.8),
+            AppColors.primary.withValues(alpha:0.8),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha:0.3),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -371,14 +371,14 @@ class PrayerTimesPage extends ConsumerWidget {
             children: [
               Icon(
                 Icons.access_time,
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha:0.9),
                 size: 20,
               ),
               const SizedBox(width: 8),
               Text(
                 'الصلاة القادمة',
                 style: TextStyle(
-                  color: Colors.white.withOpacity(0.9),
+                  color: Colors.white.withValues(alpha:0.9),
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -407,7 +407,7 @@ class PrayerTimesPage extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha:0.2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -435,21 +435,21 @@ class PrayerTimesPage extends ConsumerWidget {
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: isCurrent
-            ? AppColors.primary.withOpacity(0.1)
+            ? AppColors.primary.withValues(alpha:0.1)
             : AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isCurrent
               ? AppColors.primary
               : isNext
-                ? AppColors.primary.withOpacity(0.5)
+                ? AppColors.primary.withValues(alpha:0.5)
                 : AppColors.divider,
           width: isCurrent ? 2 : 1,
         ),
         boxShadow: [
           if (isCurrent || isNext)
             BoxShadow(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha:0.1),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -463,7 +463,7 @@ class PrayerTimesPage extends ConsumerWidget {
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: _getPrayerColor(key).withOpacity(0.1),
+            color: _getPrayerColor(key).withValues(alpha:0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(
@@ -498,7 +498,7 @@ class PrayerTimesPage extends ConsumerWidget {
                   vertical: 2,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha:0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -549,7 +549,7 @@ class PrayerTimesPage extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha:0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
@@ -656,7 +656,7 @@ class PrayerTimesPage extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.secondary.withOpacity(0.1),
+                  color: AppColors.secondary.withValues(alpha:0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
@@ -698,11 +698,11 @@ class PrayerTimesPage extends ConsumerWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: isHighlight
-            ? AppColors.primary.withOpacity(0.05)
+            ? AppColors.primary.withValues(alpha:0.05)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
         border: isHighlight
-            ? Border.all(color: AppColors.primary.withOpacity(0.2))
+            ? Border.all(color: AppColors.primary.withValues(alpha:0.2))
             : null,
       ),
       child: Row(
@@ -843,7 +843,7 @@ class PrayerTimesPage extends ConsumerWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: AppColors.primary.withOpacity(0.3),
+                    color: AppColors.primary.withValues(alpha:0.3),
                     width: 2,
                   ),
                 ),
@@ -886,7 +886,7 @@ class PrayerTimesPage extends ConsumerWidget {
                           gradient: LinearGradient(
                             colors: [
                               AppColors.primary,
-                              AppColors.primary.withOpacity(0.3),
+                              AppColors.primary.withValues(alpha:0.3),
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -908,7 +908,7 @@ class PrayerTimesPage extends ConsumerWidget {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.primary.withOpacity(0.4),
+                            color: AppColors.primary.withValues(alpha:0.4),
                             blurRadius: 8,
                           ),
                         ],
