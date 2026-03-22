@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/providers/settings_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/widgets/error_state_widget.dart';
@@ -129,6 +130,79 @@ class _HomePageState extends ConsumerState<HomePage> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => AzanNafilSheet(prayer: currentPrayer),
+    );
+  }
+
+  void _showTimezoneDialog() {
+    HapticFeedback.mediumImpact();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'اختر المنطقة الزمنية',
+          style: AppTypography.textTheme.titleLarge,
+        ),
+        content: SizedBox(
+          width: double.maxFinite,
+          height: 400,
+          child: Consumer(
+            builder: (context, ref, child) {
+              final currentTimezone = ref.watch(timezoneProvider);
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: availableTimezones.length,
+                itemBuilder: (context, index) {
+                  final entry = availableTimezones.entries.elementAt(index);
+                  final isSelected = entry.key == currentTimezone;
+                  return ListTile(
+                    leading: Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        color: isSelected 
+                            ? AppColors.primary.withValues(alpha: 0.1)
+                            : Colors.grey.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        isSelected ? Icons.check : Icons.public,
+                        color: isSelected ? AppColors.primary : Colors.grey,
+                        size: 20,
+                      ),
+                    ),
+                    title: Text(
+                      entry.value,
+                      style: AppTypography.textTheme.bodyMedium?.copyWith(
+                        color: isSelected ? AppColors.primary : null,
+                        fontWeight: isSelected ? FontWeight.w600 : null,
+                      ),
+                    ),
+                    trailing: Text(
+                      entry.key.split('/').last.replaceAll('_', ' '),
+                      style: AppTypography.textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    selected: isSelected,
+                    onTap: () {
+                      ref.read(timezoneProvider.notifier).setTimezone(entry.key);
+                      Navigator.pop(context);
+                      // Refresh prayer times with new timezone
+                      ref.read(homeNotifierProvider.notifier).refreshAll();
+                    },
+                  );
+                },
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('إلغاء'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -351,7 +425,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
             ),
 
-          // Location info
+          // Location info and timezone selector
           if (state.prayerTimes?.city != null) ...[
             const SizedBox(height: 8),
             Row(
@@ -367,6 +441,42 @@ class _HomePageState extends ConsumerState<HomePage> {
                   style: AppTypography.textTheme.bodySmall?.copyWith(
                     color: Colors.white.withValues(alpha: 0.5),
                     fontSize: 10,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                // Timezone selector
+                GestureDetector(
+                  onTap: _showTimezoneDialog,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.schedule,
+                          color: Colors.white.withValues(alpha: 0.6),
+                          size: 10,
+                        ),
+                        const SizedBox(width: 3),
+                        Consumer(
+                          builder: (context, ref, child) {
+                            final tz = ref.watch(timezoneProvider);
+                            final offset = availableTimezones[tz] ?? 'GMT+3';
+                            return Text(
+                              offset.split('(').last.replaceAll(')', ''),
+                              style: AppTypography.textTheme.labelSmall?.copyWith(
+                                color: Colors.white.withValues(alpha: 0.7),
+                                fontSize: 9,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 if (state.isOffline) ...[

@@ -135,17 +135,41 @@ class AdhkarNotifier extends _$AdhkarNotifier {
       final apiService = ref.read(apiServiceProvider);
       final response = await apiService.getAdhkarByCategory(slug);
 
-      final data = response['data'] as List<dynamic>;
-      final adhkar = data
+      // API returns: { "data": { "category": {...}, "adhkar": [...] } }
+      final dataMap = response['data'] as Map<String, dynamic>?;
+      final dataList = dataMap?['adhkar'] ?? response['adhkar'] ?? response['data'];
+      
+      final List<dynamic> adhkarData;
+      if (dataList is List) {
+        adhkarData = dataList;
+      } else if (dataList is Map && dataList.containsKey('adhkar')) {
+        adhkarData = dataList['adhkar'] as List<dynamic>;
+      } else {
+        adhkarData = [];
+      }
+      
+      final adhkar = adhkarData
           .map((e) => Dhikr.fromJson(e as Map<String, dynamic>))
           .toList();
+      
+      // Get category info from response
+      final categoryData = dataMap?['category'] as Map<String, dynamic>?;
+      final category = categoryData != null 
+          ? AdhkarCategory(
+              id: categoryData['id'] as int? ?? 0,
+              name: categoryData['name'] as String? ?? slug,
+              slug: slug,
+              icon: categoryData['icon'] as String? ?? '',
+              adhkarCount: adhkar.length,
+            )
+          : AdhkarCategory(id: 0, name: slug, slug: slug, icon: '', adhkarCount: adhkar.length);
 
       // Save to cache
-      await cacheBox.put(cacheKey, jsonEncode(data));
+      await cacheBox.put(cacheKey, jsonEncode(adhkarData));
 
       state = state.copyWith(
         isLoadingAdhkar: false,
-        currentCollection: AdhkarCollection(adhkar: adhkar, category: AdhkarCategory(id: 0, name: slug, slug: slug, icon: '', adhkarCount: adhkar.length)),
+        currentCollection: AdhkarCollection(adhkar: adhkar, category: category),
         isOffline: false,
         error: null,
       );
