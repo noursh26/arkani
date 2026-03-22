@@ -43,9 +43,9 @@ subprojects {
     }
 }
 
-subprojects {
-    afterEvaluate {
-        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+gradle.projectsEvaluated {
+    subprojects.each { sub ->
+        sub.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
             kotlinOptions {
                 freeCompilerArgs += ['-Xskip-metadata-version-check']
             }
