@@ -72,24 +72,24 @@ class AppTheme {
 
       // Card Theme
       cardTheme: CardThemeData(
-        elevation: 2,
+        elevation: 1,
         shadowColor: AppColors.shadow,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
         ),
         color: AppColors.surface,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       ),
 
       // Elevated Button Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          elevation: 2,
+          elevation: 0,
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.onPrimary,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(10),
           ),
           textStyle: AppTypography.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w600,
@@ -220,9 +220,9 @@ class AppTheme {
       // Dialog Theme
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.surface,
-        elevation: 4,
+        elevation: 2,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(14),
         ),
         titleTextStyle: AppTypography.textTheme.headlineSmall,
         contentTextStyle: AppTypography.textTheme.bodyMedium,

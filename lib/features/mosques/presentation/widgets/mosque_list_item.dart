@@ -27,40 +27,35 @@ class MosqueListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      elevation: isSelected ? 4 : 1,
+      margin: const EdgeInsets.only(bottom: 8),
+      elevation: isSelected ? 2 : 0.5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         side: isSelected
-            ? const BorderSide(color: AppColors.primary, width: 2)
+            ? const BorderSide(color: AppColors.primary, width: 1.5)
             : BorderSide.none,
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(10),
           child: Row(
             children: [
-              // Mosque Icon
               Container(
-                width: 56,
-                height: 56,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppColors.primary, AppColors.primaryDark],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(14),
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
                   Icons.mosque,
                   color: AppColors.onPrimary,
-                  size: 28,
+                  size: 20,
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 10),
 
               // Info
               Expanded(
@@ -119,18 +114,18 @@ class MosqueListItem extends StatelessWidget {
                 ),
               ),
 
-              // Distance
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
                   color: AppColors.primaryContainer,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
                   _formatDistance(mosque.distanceMeters),
                   style: AppTypography.textTheme.labelSmall?.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w700,
+                    fontSize: 10,
                   ),
                 ),
               ),

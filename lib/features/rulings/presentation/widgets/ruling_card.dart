@@ -17,16 +17,16 @@ class RulingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      elevation: 2,
+      margin: const EdgeInsets.only(bottom: 8),
+      elevation: 1,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,7 +46,7 @@ class RulingCard extends StatelessWidget {
                     ),
                   ),
                 ),
-              if (ruling.topic != null) const SizedBox(height: 12),
+              if (ruling.topic != null) const SizedBox(height: 8),
 
               // Question
               Row(
@@ -83,7 +83,7 @@ class RulingCard extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
 
               // Answer Preview
               Row(
@@ -121,23 +121,23 @@ class RulingCard extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 6),
 
-              // View More
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
                     'عرض المزيد',
-                    style: AppTypography.textTheme.labelMedium?.copyWith(
+                    style: AppTypography.textTheme.labelSmall?.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w600,
+                      fontSize: 10,
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 2),
                   const Icon(
                     Icons.arrow_forward_ios,
-                    size: 14,
+                    size: 10,
                     color: AppColors.primary,
                   ),
                 ],

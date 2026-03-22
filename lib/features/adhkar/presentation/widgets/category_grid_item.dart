@@ -38,78 +38,61 @@ class CategoryGridItem extends StatelessWidget {
     final icon = _getCategoryIcon(category.slug);
 
     return Card(
-      elevation: 3,
+      elevation: 1,
       shadowColor: AppColors.shadow,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(14),
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(14),
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                AppColors.surface,
-                AppColors.primary.withValues(alpha:0.03),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(20),
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(14),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(12),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Icon Container
                 Container(
-                  width: 56,
-                  height: 56,
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        AppColors.primary.withValues(alpha:0.15),
-                        AppColors.primary.withValues(alpha:0.05),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
+                    color: AppColors.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: Icon(
                     icon,
                     color: AppColors.primary,
-                    size: 28,
+                    size: 20,
                   ),
                 ),
-                const SizedBox(height: 16),
-                
-                // Category Name
+                const SizedBox(height: 8),
                 Text(
                   category.name,
-                  style: AppTypography.textTheme.titleSmall?.copyWith(
+                  style: AppTypography.textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w700,
+                    fontSize: 12,
                   ),
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 6),
-                
-                // Count badge
+                const SizedBox(height: 4),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
                     color: AppColors.primaryContainer,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     '${category.adhkarCount} ذكر',
                     style: AppTypography.textTheme.labelSmall?.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w600,
+                      fontSize: 10,
                     ),
                   ),
                 ),

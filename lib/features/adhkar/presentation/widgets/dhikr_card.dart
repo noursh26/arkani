@@ -28,45 +28,41 @@ class _DhikrCardState extends State<DhikrCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      elevation: 2,
+      margin: const EdgeInsets.only(bottom: 8),
+      elevation: 1,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: InkWell(
         onLongPress: widget.onLongPress,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Header with index, source, and count badge
               Row(
                 children: [
-                  // Index badge
                   Container(
-                    width: 28,
-                    height: 28,
+                    width: 24,
+                    height: 24,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [AppColors.primary, AppColors.primaryDark],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     child: Center(
                       child: Text(
                         '${widget.index}',
-                        style: AppTypography.textTheme.labelMedium?.copyWith(
+                        style: AppTypography.textTheme.labelSmall?.copyWith(
                           color: AppColors.onPrimary,
                           fontWeight: FontWeight.w700,
+                          fontSize: 10,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   
                   // Source
                   if (widget.dhikr.source != null && widget.dhikr.source!.isNotEmpty)
@@ -102,14 +98,13 @@ class _DhikrCardState extends State<DhikrCard> {
                     ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
 
-              // Dhikr text
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: AppColors.scaffoldBackground,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: SelectableText(
                   widget.dhikr.text,
@@ -120,7 +115,7 @@ class _DhikrCardState extends State<DhikrCard> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
 
               // Counter section
               if (widget.dhikr.count > 1)

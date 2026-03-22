@@ -41,72 +41,68 @@ class TodayNotificationCard extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            color.withValues(alpha:0.08),
-            color.withValues(alpha:0.03),
-          ],
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-        ),
-        borderRadius: BorderRadius.circular(16),
+        color: color.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withValues(alpha:0.2),
-          width: 1,
+          color: color.withValues(alpha: 0.12),
         ),
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha:0.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 22,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: color, size: 18),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
                     Text(
                       label,
-                      style: AppTypography.textTheme.labelLarge?.copyWith(
+                      style: AppTypography.textTheme.labelSmall?.copyWith(
                         color: color,
                         fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      title,
-                      style: AppTypography.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
+                        fontSize: 10,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          if (body.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            Text(
-              body,
-              style: AppTypography.textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondary,
-                height: 1.5,
-              ),
+                if (title.isNotEmpty)
+                  Text(
+                    title,
+                    style: AppTypography.textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                if (body.isNotEmpty) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    body,
+                    style: AppTypography.textTheme.bodySmall?.copyWith(
+                      color: AppColors.textSecondary,
+                      fontSize: 11,
+                      height: 1.4,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ],
             ),
-          ],
+          ),
         ],
       ),
     );
