@@ -22,9 +22,9 @@ RulingTopic _$RulingTopicFromJson(Map<String, dynamic> json) {
 mixin _$RulingTopic {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get icon => throw _privateConstructorUsedError;
+  String? get icon => throw _privateConstructorUsedError;
   @JsonKey(name: 'rulings_count')
-  int get rulingsCount => throw _privateConstructorUsedError;
+  int? get rulingsCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,8 +41,8 @@ abstract class $RulingTopicCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String icon,
-      @JsonKey(name: 'rulings_count') int rulingsCount});
+      String? icon,
+      @JsonKey(name: 'rulings_count') int? rulingsCount});
 }
 
 /// @nodoc
@@ -60,8 +60,8 @@ class _$RulingTopicCopyWithImpl<$Res, $Val extends RulingTopic>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? icon = null,
-    Object? rulingsCount = null,
+    Object? icon = freezed,
+    Object? rulingsCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -72,14 +72,14 @@ class _$RulingTopicCopyWithImpl<$Res, $Val extends RulingTopic>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: null == icon
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as String,
-      rulingsCount: null == rulingsCount
+              as String?,
+      rulingsCount: freezed == rulingsCount
           ? _value.rulingsCount
           : rulingsCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ) as $Val);
   }
 }
@@ -95,8 +95,8 @@ abstract class _$$RulingTopicImplCopyWith<$Res>
   $Res call(
       {int id,
       String name,
-      String icon,
-      @JsonKey(name: 'rulings_count') int rulingsCount});
+      String? icon,
+      @JsonKey(name: 'rulings_count') int? rulingsCount});
 }
 
 /// @nodoc
@@ -112,8 +112,8 @@ class __$$RulingTopicImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? icon = null,
-    Object? rulingsCount = null,
+    Object? icon = freezed,
+    Object? rulingsCount = freezed,
   }) {
     return _then(_$RulingTopicImpl(
       id: null == id
@@ -124,14 +124,14 @@ class __$$RulingTopicImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: null == icon
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as String,
-      rulingsCount: null == rulingsCount
+              as String?,
+      rulingsCount: freezed == rulingsCount
           ? _value.rulingsCount
           : rulingsCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -142,8 +142,8 @@ class _$RulingTopicImpl implements _RulingTopic {
   const _$RulingTopicImpl(
       {required this.id,
       required this.name,
-      required this.icon,
-      @JsonKey(name: 'rulings_count') required this.rulingsCount});
+      this.icon,
+      @JsonKey(name: 'rulings_count') this.rulingsCount});
 
   factory _$RulingTopicImpl.fromJson(Map<String, dynamic> json) =>
       _$$RulingTopicImplFromJson(json);
@@ -153,10 +153,10 @@ class _$RulingTopicImpl implements _RulingTopic {
   @override
   final String name;
   @override
-  final String icon;
+  final String? icon;
   @override
   @JsonKey(name: 'rulings_count')
-  final int rulingsCount;
+  final int? rulingsCount;
 
   @override
   String toString() {
@@ -197,8 +197,8 @@ abstract class _RulingTopic implements RulingTopic {
   const factory _RulingTopic(
           {required final int id,
           required final String name,
-          required final String icon,
-          @JsonKey(name: 'rulings_count') required final int rulingsCount}) =
+          final String? icon,
+          @JsonKey(name: 'rulings_count') final int? rulingsCount}) =
       _$RulingTopicImpl;
 
   factory _RulingTopic.fromJson(Map<String, dynamic> json) =
@@ -209,10 +209,10 @@ abstract class _RulingTopic implements RulingTopic {
   @override
   String get name;
   @override
-  String get icon;
+  String? get icon;
   @override
   @JsonKey(name: 'rulings_count')
-  int get rulingsCount;
+  int? get rulingsCount;
   @override
   @JsonKey(ignore: true)
   _$$RulingTopicImplCopyWith<_$RulingTopicImpl> get copyWith =>

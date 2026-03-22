@@ -8,8 +8,8 @@ class RulingTopic with _$RulingTopic {
   const factory RulingTopic({
     required int id,
     required String name,
-    required String icon,
-    @JsonKey(name: 'rulings_count') required int rulingsCount,
+    String? icon,
+    @JsonKey(name: 'rulings_count') int? rulingsCount,
   }) = _RulingTopic;
 
   factory RulingTopic.fromJson(Map<String, dynamic> json) =>

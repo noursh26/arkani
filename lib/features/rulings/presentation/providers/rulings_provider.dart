@@ -161,7 +161,36 @@ class RulingsNotifier extends _$RulingsNotifier {
         page: page,
       );
 
-      final data = response['data'] as Map<String, dynamic>;
+      // Check if response has valid data structure
+      if (response['data'] == null) {
+        state = state.copyWith(
+          isLoadingRulings: false,
+          isLoadingMore: false,
+          rulings: refresh ? [] : state.rulings,
+          hasMore: false,
+        state = state.copyWith(
+          isLoadingRulings: false,
+          isLoadingMore: false,
+          rulings: refresh ? [] : state.rulings,
+          hasMore: false,
+          error: null, // Consider logging: 'No data received from API'
+        );
+        );
+        return;
+      }
+
+      final data = response['data'] as Map<String, dynamic>?;
+      final paginated = RulingsPaginated.fromJson(data);
+        state = state.copyWith(
+          isLoadingRulings: false,
+          isLoadingMore: false,
+          rulings: refresh ? [] : state.rulings,
+          hasMore: false,
+          error: null,
+        );
+        return;
+      }
+
       final paginated = RulingsPaginated.fromJson(data);
 
       final allRulings = refresh
