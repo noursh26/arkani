@@ -81,7 +81,7 @@ class NotificationService {
       importance: Importance.high,
       playSound: true,
       enableVibration: true,
-      sound: const RawResourceAndroidNotificationSound('adhan'),
+      sound: RawResourceAndroidNotificationSound('adhan'),
     );
     await androidPlugin.createNotificationChannel(prayerChannel);
 
@@ -271,8 +271,8 @@ class NotificationService {
       priority: Priority.high,
       playSound: true,
       enableVibration: true,
-      sound: const RawResourceAndroidNotificationSound('adhan'),
-      styleInformation: const BigTextStyleInformation(''),
+      sound: RawResourceAndroidNotificationSound('adhan'),
+      styleInformation: BigTextStyleInformation(''),
       autoCancel: true,
     );
 
@@ -344,7 +344,7 @@ class NotificationService {
       importance: Importance.defaultImportance,
       priority: Priority.defaultPriority,
       playSound: true,
-      styleInformation: const BigTextStyleInformation(''),
+      styleInformation: BigTextStyleInformation(''),
       autoCancel: true,
     );
 
