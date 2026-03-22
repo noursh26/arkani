@@ -127,19 +127,6 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> _post(
-    String path, {
-    dynamic data,
-  }) async {
-    try {
-      final response = await _dio.post(path, data: data);
-      return _handleResponse(response);
-    } on DioException catch (e) {
-      throw _handleError(e);
-    }
-  }
-
-
   Map<String, dynamic> _handleResponse(Response response) {
     if (response.data is Map<String, dynamic>) {
       return response.data as Map<String, dynamic>;

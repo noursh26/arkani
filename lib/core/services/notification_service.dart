@@ -74,7 +74,7 @@ class NotificationService {
     if (androidPlugin == null) return;
 
     // Prayer times channel
-    final prayerChannel = AndroidNotificationChannel(
+    const prayerChannel = AndroidNotificationChannel(
       _prayerNotificationChannelId,
       _prayerNotificationChannelName,
       description: _prayerNotificationChannelDesc,
@@ -86,7 +86,7 @@ class NotificationService {
     await androidPlugin.createNotificationChannel(prayerChannel);
 
     // Adhkar channel
-    final adhkarChannel = AndroidNotificationChannel(
+    const adhkarChannel = AndroidNotificationChannel(
       _adhkarNotificationChannelId,
       _adhkarNotificationChannelName,
       description: _adhkarNotificationChannelDesc,
@@ -97,7 +97,7 @@ class NotificationService {
     await androidPlugin.createNotificationChannel(adhkarChannel);
 
     // General channel
-    final generalChannel = AndroidNotificationChannel(
+    const generalChannel = AndroidNotificationChannel(
       _generalNotificationChannelId,
       _generalNotificationChannelName,
       description: _generalNotificationChannelDesc,
@@ -263,7 +263,7 @@ class NotificationService {
 
     final notificationText = 'حان وقت صلاة $prayerName، استجب لنداء ربك 🕌';
 
-    final androidDetails = AndroidNotificationDetails(
+    const androidDetails = AndroidNotificationDetails(
       _prayerNotificationChannelId,
       _prayerNotificationChannelName,
       channelDescription: _prayerNotificationChannelDesc,
@@ -283,7 +283,7 @@ class NotificationService {
       sound: 'adhan.caf',
     );
 
-    final notificationDetails = NotificationDetails(
+    const notificationDetails = NotificationDetails(
       android: androidDetails,
       iOS: darwinDetails,
     );
@@ -337,7 +337,7 @@ class NotificationService {
     // Cancel existing notification
     await cancelNotification(id);
 
-    final androidDetails = AndroidNotificationDetails(
+    const androidDetails = AndroidNotificationDetails(
       _adhkarNotificationChannelId,
       _adhkarNotificationChannelName,
       channelDescription: _adhkarNotificationChannelDesc,
@@ -354,7 +354,7 @@ class NotificationService {
       presentSound: true,
     );
 
-    final notificationDetails = NotificationDetails(
+    const notificationDetails = NotificationDetails(
       android: androidDetails,
       iOS: darwinDetails,
     );

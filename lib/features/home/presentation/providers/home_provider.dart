@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/di/providers.dart';
 import '../../../../core/errors/exceptions.dart';
-import '../../../../core/services/local_notification_service.dart';
+import '../../../../core/services/notification_service.dart';
 import '../../../../core/services/prayer_calculation_service.dart';
 import '../../../../core/utils/location_util.dart';
 import '../../domain/entities/prayer_times.dart';
@@ -232,7 +232,7 @@ class HomeNotifier extends _$HomeNotifier {
       final maghribTime = DateTime.parse('$today ${prayerTimes.maghrib}');
       final ishaTime = DateTime.parse('$today ${prayerTimes.isha}');
 
-      await LocalNotificationService().scheduleDailyPrayers(
+      await NotificationService().scheduleDailyPrayers(
         fajrTime: fajrTime,
         dhuhrTime: dhuhrTime,
         asrTime: asrTime,
