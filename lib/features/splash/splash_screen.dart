@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/services/notification_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 
@@ -65,49 +64,20 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _startInitialization() async {
-    try {
-      // Safety timeout: ALWAYS navigate after max 5 seconds
-      await Future.any([
-        _doInit(),
-        Future.delayed(const Duration(seconds: 5)),
-      ]);
-    } catch (e) {
-      debugPrint('Splash init error: $e');
-    }
-
-    // Always navigate regardless of what happened
-    _navigate();
-  }
-
-  Future<void> _doInit() async {
     // Minimum display time for animations
-    await Future.delayed(const Duration(milliseconds: 2800));
+    await Future.delayed(const Duration(milliseconds: 2500));
+    
+    // Navigate directly - no async chains that can hang
+    _navigateNow();
   }
 
-  void _navigate() {
+  void _navigateNow() {
     if (_isNavigating || !mounted) return;
     _isNavigating = true;
-
-    // Determine destination
-    _getDestination().then((route) {
-      if (mounted) context.go(route);
-    }).catchError((_) {
-      if (mounted) context.go('/');
-    });
-  }
-
-  Future<String> _getDestination() async {
-    try {
-      final notificationService = NotificationService();
-      final hasRequested = await notificationService
-          .hasRequestedPermission()
-          .timeout(const Duration(seconds: 2), onTimeout: () => true);
-
-      if (!hasRequested) return '/notification-permission';
-      return '/';
-    } catch (_) {
-      return '/';
-    }
+    
+    // Go directly to home - skip notification permission check that may hang
+    // Notification permission will be requested when needed
+    context.go('/');
   }
 
   @override

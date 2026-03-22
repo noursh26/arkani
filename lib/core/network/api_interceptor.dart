@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 
@@ -6,41 +8,62 @@ import '../utils/device_info_util.dart';
 
 class ApiInterceptor extends Interceptor {
   final DeviceInfoUtil _deviceInfoUtil = DeviceInfoUtil();
+  
+  // Cache device info to avoid repeated async calls
+  static Map<String, String>? _cachedHeaders;
 
   @override
   Future<void> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    // Check connectivity
-    try {
-      final connectivityResult = await Connectivity().checkConnectivity();
-      final hasConnection = connectivityResult is List
-          ? (connectivityResult as List).any((r) => r != ConnectivityResult.none)
-          : connectivityResult != ConnectivityResult.none;
-      if (!hasConnection) {
-        handler.reject(
-          DioException(
-            requestOptions: options,
-            error: const NetworkException('لا يوجد اتصال بالإنترنت'),
-            type: DioExceptionType.connectionError,
-          ),
-        );
-        return;
-      }
-    } catch (_) {
-      // If connectivity check fails, proceed anyway and let Dio handle errors
+    // Use cached headers if available
+    if (_cachedHeaders != null) {
+      options.headers.addAll(_cachedHeaders!);
+      handler.next(options);
+      return;
     }
 
-    // Add device headers
+    // Check connectivity - skip if fails
+    bool hasConnection = true; // Default to true to not block requests
     try {
-      final deviceInfo = await _deviceInfoUtil.getDeviceInfo();
-      options.headers.addAll({
+      final result = await Connectivity().checkConnectivity() as List;
+      // connectivity_plus 5.x returns List<ConnectivityResult>
+      for (final r in result) {
+        if (r != ConnectivityResult.none) {
+          hasConnection = true;
+          break;
+        }
+        hasConnection = false;
+      }
+    } catch (_) {
+      // Skip connectivity check on error - proceed with request
+    }
+    
+    if (!hasConnection) {
+      handler.reject(
+        DioException(
+          requestOptions: options,
+          error: const NetworkException('لا يوجد اتصال بالإنترنت'),
+          type: DioExceptionType.connectionError,
+        ),
+      );
+      return;
+    }
+
+    // Add device headers with timeout
+    try {
+      final deviceInfo = await _deviceInfoUtil
+          .getDeviceInfo()
+          .timeout(const Duration(seconds: 2));
+          
+      _cachedHeaders = {
         'X-Device-ID': deviceInfo.deviceId,
         'X-Platform': deviceInfo.platform,
         'X-App-Version': deviceInfo.appVersion,
         'Accept-Language': 'ar',
-      });
+      };
+      options.headers.addAll(_cachedHeaders!);
     } catch (_) {
       options.headers['Accept-Language'] = 'ar';
     }
