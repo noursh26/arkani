@@ -26,16 +26,20 @@ class MosqueCard extends StatelessWidget {
   }
 
   Future<void> _openMaps() async {
-    final url = 'https://www.google.com/maps/search/?api=1&query=${mosque.latitude},${mosque.longitude}';
-    final uri = Uri.parse(url);
+    final uri = Uri.https('www.google.com', '/maps/search/', {
+      'api': '1',
+      'query': '${mosque.latitude},${mosque.longitude}',
+    });
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
   }
 
   Future<void> _getDirections() async {
-    final url = 'https://www.google.com/maps/dir/?api=1&destination=${mosque.latitude},${mosque.longitude}';
-    final uri = Uri.parse(url);
+    final uri = Uri.https('www.google.com', '/maps/dir/', {
+      'api': '1',
+      'destination': '${mosque.latitude},${mosque.longitude}',
+    });
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
