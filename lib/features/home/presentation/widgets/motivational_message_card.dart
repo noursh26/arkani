@@ -40,14 +40,14 @@ class MotivationalMessageCard extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             AppColors.secondaryContainer,
-            AppColors.secondary.withOpacity(0.1),
+            AppColors.secondary.withValues(alpha:0.1),
           ],
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         ),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.secondary.withOpacity(0.3),
+          color: AppColors.secondary.withValues(alpha:0.3),
           width: 1,
         ),
       ),

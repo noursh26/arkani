@@ -86,7 +86,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                 leading: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
+                    color: AppColors.primary.withValues(alpha:0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(Icons.copy, color: AppColors.primary),
@@ -106,7 +106,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                 leading: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AppColors.secondary.withOpacity(0.1),
+                    color: AppColors.secondary.withValues(alpha:0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(Icons.share, color: AppColors.secondary),
@@ -151,7 +151,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withOpacity(0.1),
+                            color: AppColors.primary.withValues(alpha:0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -180,8 +180,8 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                               icon: const Icon(Icons.remove),
                               style: IconButton.styleFrom(
                                 backgroundColor: fontSizeNotifier.canDecrease
-                                    ? AppColors.primary.withOpacity(0.1)
-                                    : Colors.grey.withOpacity(0.1),
+                                    ? AppColors.primary.withValues(alpha:0.1)
+                                    : Colors.grey.withValues(alpha:0.1),
                               ),
                             ),
                             Expanded(
@@ -208,8 +208,8 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                               icon: const Icon(Icons.add),
                               style: IconButton.styleFrom(
                                 backgroundColor: fontSizeNotifier.canIncrease
-                                    ? AppColors.primary.withOpacity(0.1)
-                                    : Colors.grey.withOpacity(0.1),
+                                    ? AppColors.primary.withValues(alpha:0.1)
+                                    : Colors.grey.withValues(alpha:0.1),
                               ),
                             ),
                           ],
@@ -274,7 +274,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                       child: Icon(
                         Icons.menu_book,
                         size: 150,
-                        color: AppColors.onPrimary.withOpacity(0.05),
+                        color: AppColors.onPrimary.withValues(alpha:0.05),
                       ),
                     ),
                   ],
@@ -429,7 +429,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withOpacity(0.3),
+                color: AppColors.primary.withValues(alpha:0.3),
                 blurRadius: 12,
                 offset: const Offset(0, 6),
               ),
@@ -441,7 +441,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: AppColors.onPrimary.withOpacity(0.2),
+                  color: AppColors.onPrimary.withValues(alpha:0.2),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: const Icon(
@@ -466,7 +466,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                     Text(
                       '${collection.adhkar.length} ذكر',
                       style: AppTypography.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.onPrimary.withOpacity(0.9),
+                        color: AppColors.onPrimary.withValues(alpha:0.9),
                       ),
                     ),
                   ],

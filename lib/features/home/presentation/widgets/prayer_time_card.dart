@@ -49,7 +49,7 @@ class PrayerTimesCard extends StatelessWidget {
           width: 36,
           height: 36,
           decoration: BoxDecoration(
-            color: prayer.color.withOpacity(0.1),
+            color: prayer.color.withValues(alpha:0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(

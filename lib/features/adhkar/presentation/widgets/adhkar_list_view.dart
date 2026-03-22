@@ -32,7 +32,7 @@ class AdhkarListView extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: AppColors.onPrimary.withOpacity(0.2),
+                  color: AppColors.onPrimary.withValues(alpha:0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -57,7 +57,7 @@ class AdhkarListView extends StatelessWidget {
                     Text(
                       '${collection.adhkar.length} ذكر',
                       style: AppTypography.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.onPrimary.withOpacity(0.9),
+                        color: AppColors.onPrimary.withValues(alpha:0.9),
                       ),
                     ),
                   ],

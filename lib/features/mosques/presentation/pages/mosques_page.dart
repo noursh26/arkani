@@ -107,7 +107,7 @@ class _MosquesPageState extends ConsumerState<MosquesPage> {
                       child: Icon(
                         Icons.mosque,
                         size: 120,
-                        color: AppColors.onPrimary.withOpacity(0.05),
+                        color: AppColors.onPrimary.withValues(alpha:0.05),
                       ),
                     ),
                   ],

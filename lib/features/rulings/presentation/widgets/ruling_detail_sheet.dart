@@ -101,7 +101,7 @@ class RulingDetailSheet extends StatelessWidget {
                       color: AppColors.primaryContainer,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: AppColors.primary.withOpacity(0.2),
+                        color: AppColors.primary.withValues(alpha:0.2),
                       ),
                     ),
                     child: Text(
@@ -127,10 +127,10 @@ class RulingDetailSheet extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: AppColors.success.withOpacity(0.08),
+                      color: AppColors.success.withValues(alpha:0.08),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: AppColors.success.withOpacity(0.2),
+                        color: AppColors.success.withValues(alpha:0.2),
                       ),
                     ),
                     child: Text(
@@ -159,15 +159,15 @@ class RulingDetailSheet extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.secondary.withOpacity(0.15),
-                            AppColors.secondary.withOpacity(0.05),
+                            AppColors.secondary.withValues(alpha:0.15),
+                            AppColors.secondary.withValues(alpha:0.05),
                           ],
                           begin: Alignment.topRight,
                           end: Alignment.bottomLeft,
                         ),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: AppColors.secondary.withOpacity(0.3),
+                          color: AppColors.secondary.withValues(alpha:0.3),
                         ),
                       ),
                       child: Text(
@@ -243,7 +243,7 @@ class RulingDetailSheet extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: iconColor.withOpacity(0.1),
+            color: iconColor.withValues(alpha:0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(

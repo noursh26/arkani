@@ -233,7 +233,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withOpacity(0.4),
+              color: AppColors.primary.withValues(alpha:0.4),
               blurRadius: 20,
               spreadRadius: 2,
             ),
@@ -266,7 +266,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   Text(
                     'ونفل',
                     style: AppTypography.textTheme.titleMedium?.copyWith(
-                      color: AppColors.onPrimary.withOpacity(0.9),
+                      color: AppColors.onPrimary.withValues(alpha:0.9),
                       fontWeight: FontWeight.w600,
                     ),
                   ),

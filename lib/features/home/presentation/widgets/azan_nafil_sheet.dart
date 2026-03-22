@@ -158,14 +158,14 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
         gradient: LinearGradient(
           colors: [
             AppColors.secondaryContainer,
-            AppColors.secondary.withOpacity(0.1),
+            AppColors.secondary.withValues(alpha:0.1),
           ],
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.secondary.withOpacity(0.3),
+          color: AppColors.secondary.withValues(alpha:0.3),
           width: 1,
         ),
       ),
@@ -212,7 +212,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
         color: AppColors.primaryContainer,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.primary.withOpacity(0.2),
+          color: AppColors.primary.withValues(alpha:0.2),
           width: 1,
         ),
       ),
@@ -224,7 +224,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha:0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
@@ -271,7 +271,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
             width: 24,
             height: 24,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha:0.1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Center(
@@ -313,15 +313,15 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.success.withOpacity(0.1),
-            AppColors.success.withOpacity(0.05),
+            AppColors.success.withValues(alpha:0.1),
+            AppColors.success.withValues(alpha:0.05),
           ],
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.success.withOpacity(0.3),
+          color: AppColors.success.withValues(alpha:0.3),
           width: 1,
         ),
       ),
@@ -333,7 +333,7 @@ class _AzanNafilSheetState extends ConsumerState<AzanNafilSheet> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.15),
+                  color: AppColors.success.withValues(alpha:0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(

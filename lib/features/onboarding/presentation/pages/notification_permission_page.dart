@@ -82,7 +82,7 @@ class _NotificationPermissionScreenState extends ConsumerState<NotificationPermi
                   width: 120,
                   height: 120,
                   decoration: BoxDecoration(
-                    color: AppColors.onPrimary.withOpacity(0.2),
+                    color: AppColors.onPrimary.withValues(alpha:0.2),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: const Icon(
@@ -114,7 +114,7 @@ class _NotificationPermissionScreenState extends ConsumerState<NotificationPermi
                 Text(
                   'نريد إرسال تنبيهات مهمة إليك:',
                   style: AppTypography.textTheme.titleMedium?.copyWith(
-                    color: AppColors.onPrimary.withOpacity(0.9),
+                    color: AppColors.onPrimary.withValues(alpha:0.9),
                   ),
                   textAlign: TextAlign.center,
                 ).animate()
@@ -189,7 +189,7 @@ class _NotificationPermissionScreenState extends ConsumerState<NotificationPermi
                   child: Text(
                     'لاحقاً',
                     style: AppTypography.textTheme.titleSmall?.copyWith(
-                      color: AppColors.onPrimary.withOpacity(0.7),
+                      color: AppColors.onPrimary.withValues(alpha:0.7),
                     ),
                   ),
                 ).animate()
@@ -214,7 +214,7 @@ class _NotificationPermissionScreenState extends ConsumerState<NotificationPermi
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: AppColors.onPrimary.withOpacity(0.15),
+              color: AppColors.onPrimary.withValues(alpha:0.15),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -227,7 +227,7 @@ class _NotificationPermissionScreenState extends ConsumerState<NotificationPermi
           Text(
             text,
             style: AppTypography.textTheme.bodyLarge?.copyWith(
-              color: AppColors.onPrimary.withOpacity(0.95),
+              color: AppColors.onPrimary.withValues(alpha:0.95),
             ),
           ),
         ],

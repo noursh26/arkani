@@ -73,7 +73,7 @@ class _PrayerStripItem extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: isActive
             ? LinearGradient(
-                colors: [prayer.color, prayer.color.withOpacity(0.8)],
+                colors: [prayer.color, prayer.color.withValues(alpha:0.8)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               )
@@ -87,7 +87,7 @@ class _PrayerStripItem extends StatelessWidget {
         boxShadow: isActive
             ? [
                 BoxShadow(
-                  color: prayer.color.withOpacity(0.4),
+                  color: prayer.color.withValues(alpha:0.4),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),

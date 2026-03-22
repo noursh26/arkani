@@ -30,7 +30,7 @@ class NextPrayerCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.4),
+            color: AppColors.primary.withValues(alpha:0.4),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -68,7 +68,7 @@ class NextPrayerCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             decoration: BoxDecoration(
-              color: AppColors.onPrimary.withOpacity(0.2),
+              color: AppColors.onPrimary.withValues(alpha:0.2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(

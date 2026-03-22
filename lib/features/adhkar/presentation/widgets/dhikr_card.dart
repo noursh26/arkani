@@ -89,7 +89,7 @@ class _DhikrCardState extends State<DhikrCard> {
                         color: AppColors.secondaryContainer,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: AppColors.secondary.withOpacity(0.3),
+                          color: AppColors.secondary.withValues(alpha:0.3),
                         ),
                       ),
                       child: Text(
@@ -143,8 +143,8 @@ class _DhikrCardState extends State<DhikrCard> {
         gradient: isCompleted
             ? LinearGradient(
                 colors: [
-                  AppColors.success.withOpacity(0.15),
-                  AppColors.success.withOpacity(0.05),
+                  AppColors.success.withValues(alpha:0.15),
+                  AppColors.success.withValues(alpha:0.05),
                 ],
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
@@ -152,7 +152,7 @@ class _DhikrCardState extends State<DhikrCard> {
             : LinearGradient(
                 colors: [
                   AppColors.primaryContainer,
-                  AppColors.primary.withOpacity(0.05),
+                  AppColors.primary.withValues(alpha:0.05),
                 ],
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
@@ -160,8 +160,8 @@ class _DhikrCardState extends State<DhikrCard> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isCompleted
-              ? AppColors.success.withOpacity(0.3)
-              : AppColors.primary.withOpacity(0.2),
+              ? AppColors.success.withValues(alpha:0.3)
+              : AppColors.primary.withValues(alpha:0.2),
         ),
       ),
       child: Row(
@@ -174,8 +174,8 @@ class _DhikrCardState extends State<DhikrCard> {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: isCompleted
-                      ? AppColors.success.withOpacity(0.2)
-                      : AppColors.primary.withOpacity(0.1),
+                      ? AppColors.success.withValues(alpha:0.2)
+                      : AppColors.primary.withValues(alpha:0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(

@@ -33,15 +33,15 @@ class NextPrayerCountdown extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.primary.withOpacity(0.05),
-            AppColors.primaryContainer.withOpacity(0.3),
+            AppColors.primary.withValues(alpha:0.05),
+            AppColors.primaryContainer.withValues(alpha:0.3),
           ],
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         ),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: AppColors.primary.withOpacity(0.1),
+          color: AppColors.primary.withValues(alpha:0.1),
           width: 1,
         ),
       ),
@@ -53,7 +53,7 @@ class NextPrayerCountdown extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha:0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
@@ -105,7 +105,7 @@ class NextPrayerCountdown extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.3),
+                  color: AppColors.primary.withValues(alpha:0.3),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),
@@ -116,7 +116,7 @@ class NextPrayerCountdown extends StatelessWidget {
               children: [
                 Icon(
                   Icons.timer,
-                  color: AppColors.onPrimary.withOpacity(0.9),
+                  color: AppColors.onPrimary.withValues(alpha:0.9),
                   size: 20,
                 ),
                 const SizedBox(width: 8),

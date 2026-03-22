@@ -29,7 +29,7 @@ class HeroSection extends StatelessWidget {
               colors: [
                 AppColors.primary,
                 AppColors.primaryDark,
-                AppColors.primary.withOpacity(0.95),
+                AppColors.primary.withValues(alpha:0.95),
               ],
             ),
           ),
@@ -52,7 +52,7 @@ class HeroSection extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [
                   Colors.transparent,
-                  AppColors.primaryDark.withOpacity(0.8),
+                  AppColors.primaryDark.withValues(alpha:0.8),
                 ],
               ),
             ),
@@ -89,14 +89,14 @@ class HeroSection extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.location_on,
-                        color: AppColors.onPrimary.withOpacity(0.8),
+                        color: AppColors.onPrimary.withValues(alpha:0.8),
                         size: 16,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         '${prayerTimes!.city}${prayerTimes?.country != null ? ', ${prayerTimes!.country}' : ''}',
                         style: AppTypography.textTheme.bodyMedium?.copyWith(
-                          color: AppColors.onPrimary.withOpacity(0.9),
+                          color: AppColors.onPrimary.withValues(alpha:0.9),
                         ),
                       ),
                     ],
@@ -113,10 +113,10 @@ class HeroSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.onPrimary.withOpacity(0.15),
+        color: AppColors.onPrimary.withValues(alpha:0.15),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: AppColors.onPrimary.withOpacity(0.2),
+          color: AppColors.onPrimary.withValues(alpha:0.2),
           width: 1,
         ),
       ),
@@ -125,7 +125,7 @@ class HeroSection extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: AppColors.onPrimary.withOpacity(0.8),
+            color: AppColors.onPrimary.withValues(alpha:0.8),
             size: 14,
           ),
           const SizedBox(width: 6),
@@ -146,7 +146,7 @@ class _MosquePatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.onPrimary.withOpacity(0.03)
+      ..color = AppColors.onPrimary.withValues(alpha:0.03)
       ..style = PaintingStyle.fill;
 
     const mosqueWidth = 60.0;
