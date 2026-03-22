@@ -43,17 +43,26 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   Future<void> _startAnimation() async {
+    // Start with a timeout to ensure we never get stuck
+    final timeout = Future.delayed(const Duration(seconds: 5));
+    
     // Start mosque animation
     await _mosqueController.forward();
     
     // Start text animation
     await _textController.forward();
     
-    // Check location permission
-    await _checkLocationPermission();
+    // Check location permission with timeout
+    await Future.any([
+      _checkLocationPermission(),
+      timeout,
+    ]);
     
-    // Check notification permission and navigate accordingly
-    await _checkNotificationPermission();
+    // Check notification permission and navigate accordingly with timeout
+    await Future.any([
+      _checkNotificationPermission(),
+      timeout,
+    ]);
   }
 
   Future<void> _checkNotificationPermission() async {
@@ -75,17 +84,22 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     if (_locationChecked) return;
     _locationChecked = true;
 
-    // Check if location services are enabled
-    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Don't block, just continue with default location
-      return;
-    }
+    try {
+      // Check if location services are enabled
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        // Don't block, just continue with default location
+        return;
+      }
 
-    // Check permission
-    var permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+      // Check permission
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+    } catch (e) {
+      // Continue without location if there's an error
+      debugPrint('Location permission error: $e');
     }
   }
 

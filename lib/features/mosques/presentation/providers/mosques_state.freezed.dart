@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -11,7 +12,7 @@ part of 'mosques_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `private` fields.');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MosquesState {
@@ -25,7 +26,8 @@ mixin _$MosquesState {
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $MosquesStateCopyWith<MosquesState> get copyWith => throw _privateConstructorUsedError;
+  $MosquesStateCopyWith<MosquesState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -34,16 +36,17 @@ abstract class $MosquesStateCopyWith<$Res> {
           MosquesState value, $Res Function(MosquesState) then) =
       _$MosquesStateCopyWithImpl<$Res, MosquesState>;
   @useResult
-  $Res call({
-    bool isLoading,
-    bool isOffline,
-    List<Mosque> mosques,
-    LocationData? currentLocation,
-    Mosque? selectedMosque,
-    bool isUsingDefaultLocation,
-    bool isLocationDenied,
-    String? error,
-  });
+  $Res call(
+      {bool isLoading,
+      bool isOffline,
+      List<Mosque> mosques,
+      LocationData? currentLocation,
+      Mosque? selectedMosque,
+      bool isUsingDefaultLocation,
+      bool isLocationDenied,
+      String? error});
+
+  $MosqueCopyWith<$Res>? get selectedMosque;
 }
 
 /// @nodoc
@@ -103,6 +106,18 @@ class _$MosquesStateCopyWithImpl<$Res, $Val extends MosquesState>
               as String?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MosqueCopyWith<$Res>? get selectedMosque {
+    if (_value.selectedMosque == null) {
+      return null;
+    }
+
+    return $MosqueCopyWith<$Res>(_value.selectedMosque!, (value) {
+      return _then(_value.copyWith(selectedMosque: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -113,16 +128,18 @@ abstract class _$$MosquesStateImplCopyWith<$Res>
       __$$MosquesStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    bool isLoading,
-    bool isOffline,
-    List<Mosque> mosques,
-    LocationData? currentLocation,
-    Mosque? selectedMosque,
-    bool isUsingDefaultLocation,
-    bool isLocationDenied,
-    String? error,
-  });
+  $Res call(
+      {bool isLoading,
+      bool isOffline,
+      List<Mosque> mosques,
+      LocationData? currentLocation,
+      Mosque? selectedMosque,
+      bool isUsingDefaultLocation,
+      bool isLocationDenied,
+      String? error});
+
+  @override
+  $MosqueCopyWith<$Res>? get selectedMosque;
 }
 
 /// @nodoc
@@ -183,6 +200,7 @@ class __$$MosquesStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$MosquesStateImpl implements _MosquesState {
   const _$MosquesStateImpl(
       {this.isLoading = false,
@@ -205,7 +223,9 @@ class _$MosquesStateImpl implements _MosquesState {
   @override
   @JsonKey()
   List<Mosque> get mosques {
-    return _mosques;
+    if (_mosques is EqualUnmodifiableListView) return _mosques;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_mosques);
   }
 
   @override
@@ -235,8 +255,7 @@ class _$MosquesStateImpl implements _MosquesState {
                 other.isLoading == isLoading) &&
             (identical(other.isOffline, isOffline) ||
                 other.isOffline == isOffline) &&
-            const DeepCollectionEquality()
-                .equals(other._mosques, _mosques) &&
+            const DeepCollectionEquality().equals(other._mosques, _mosques) &&
             (identical(other.currentLocation, currentLocation) ||
                 other.currentLocation == currentLocation) &&
             (identical(other.selectedMosque, selectedMosque) ||

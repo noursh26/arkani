@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -11,7 +12,7 @@ part of 'islamic_ruling.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `private` fields.');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 RulingTopic _$RulingTopicFromJson(Map<String, dynamic> json) {
   return _RulingTopic.fromJson(json);
@@ -26,7 +27,8 @@ mixin _$RulingTopic {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $RulingTopicCopyWith<RulingTopic> get copyWith => throw _privateConstructorUsedError;
+  $RulingTopicCopyWith<RulingTopic> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -219,7 +221,8 @@ mixin _$IslamicRuling {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $IslamicRulingCopyWith<IslamicRuling> get copyWith => throw _privateConstructorUsedError;
+  $IslamicRulingCopyWith<IslamicRuling> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -228,7 +231,12 @@ abstract class $IslamicRulingCopyWith<$Res> {
           IslamicRuling value, $Res Function(IslamicRuling) then) =
       _$IslamicRulingCopyWithImpl<$Res, IslamicRuling>;
   @useResult
-  $Res call({int id, RulingTopic? topic, String question, String answer, String? evidence});
+  $Res call(
+      {int id,
+      RulingTopic? topic,
+      String question,
+      String answer,
+      String? evidence});
 
   $RulingTopicCopyWith<$Res>? get topic;
 }
@@ -297,7 +305,12 @@ abstract class _$$IslamicRulingImplCopyWith<$Res>
       __$$IslamicRulingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, RulingTopic? topic, String question, String answer, String? evidence});
+  $Res call(
+      {int id,
+      RulingTopic? topic,
+      String question,
+      String answer,
+      String? evidence});
 
   @override
   $RulingTopicCopyWith<$Res>? get topic;
@@ -381,14 +394,17 @@ class _$IslamicRulingImpl implements _IslamicRuling {
             other is _$IslamicRulingImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.topic, topic) || other.topic == topic) &&
-            (identical(other.question, question) || other.question == question) &&
+            (identical(other.question, question) ||
+                other.question == question) &&
             (identical(other.answer, answer) || other.answer == answer) &&
-            (identical(other.evidence, evidence) || other.evidence == evidence));
+            (identical(other.evidence, evidence) ||
+                other.evidence == evidence));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, topic, question, answer, evidence);
+  int get hashCode =>
+      Object.hash(runtimeType, id, topic, question, answer, evidence);
 
   @JsonKey(ignore: true)
   @override
@@ -445,7 +461,8 @@ mixin _$RulingsPaginated {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $RulingsPaginatedCopyWith<RulingsPaginated> get copyWith => throw _privateConstructorUsedError;
+  $RulingsPaginatedCopyWith<RulingsPaginated> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -454,7 +471,12 @@ abstract class $RulingsPaginatedCopyWith<$Res> {
           RulingsPaginated value, $Res Function(RulingsPaginated) then) =
       _$RulingsPaginatedCopyWithImpl<$Res, RulingsPaginated>;
   @useResult
-  $Res call({int currentPage, int lastPage, int perPage, int total, List<IslamicRuling> items});
+  $Res call(
+      {int currentPage,
+      int lastPage,
+      int perPage,
+      int total,
+      List<IslamicRuling> items});
 }
 
 /// @nodoc
@@ -504,20 +526,25 @@ class _$RulingsPaginatedCopyWithImpl<$Res, $Val extends RulingsPaginated>
 /// @nodoc
 abstract class _$$RulingsPaginatedImplCopyWith<$Res>
     implements $RulingsPaginatedCopyWith<$Res> {
-  factory _$$RulingsPaginatedImplCopyWith(
-          _$RulingsPaginatedImpl value, $Res Function(_$RulingsPaginatedImpl) then) =
+  factory _$$RulingsPaginatedImplCopyWith(_$RulingsPaginatedImpl value,
+          $Res Function(_$RulingsPaginatedImpl) then) =
       __$$RulingsPaginatedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int currentPage, int lastPage, int perPage, int total, List<IslamicRuling> items});
+  $Res call(
+      {int currentPage,
+      int lastPage,
+      int perPage,
+      int total,
+      List<IslamicRuling> items});
 }
 
 /// @nodoc
 class __$$RulingsPaginatedImplCopyWithImpl<$Res>
     extends _$RulingsPaginatedCopyWithImpl<$Res, _$RulingsPaginatedImpl>
     implements _$$RulingsPaginatedImplCopyWith<$Res> {
-  __$$RulingsPaginatedImplCopyWithImpl(
-      _$RulingsPaginatedImpl _value, $Res Function(_$RulingsPaginatedImpl) _then)
+  __$$RulingsPaginatedImplCopyWithImpl(_$RulingsPaginatedImpl _value,
+      $Res Function(_$RulingsPaginatedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -579,7 +606,9 @@ class _$RulingsPaginatedImpl implements _RulingsPaginated {
   final List<IslamicRuling> _items;
   @override
   List<IslamicRuling> get items {
-    return _items;
+    if (_items is EqualUnmodifiableListView) return _items;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
   }
 
   @override
@@ -596,29 +625,22 @@ class _$RulingsPaginatedImpl implements _RulingsPaginated {
                 other.currentPage == currentPage) &&
             (identical(other.lastPage, lastPage) ||
                 other.lastPage == lastPage) &&
-            (identical(other.perPage, perPage) ||
-                other.perPage == perPage) &&
-            (identical(other.total, total) ||
-                other.total == total) &&
-            const DeepCollectionEquality()
-                .equals(other._items, _items));
+            (identical(other.perPage, perPage) || other.perPage == perPage) &&
+            (identical(other.total, total) || other.total == total) &&
+            const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      currentPage,
-      lastPage,
-      perPage,
-      total,
-      const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage,
+      total, const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$RulingsPaginatedImplCopyWith<_$RulingsPaginatedImpl> get copyWith =>
-      __$$RulingsPaginatedImplCopyWithImpl<_$RulingsPaginatedImpl>(this, _$identity);
+      __$$RulingsPaginatedImplCopyWithImpl<_$RulingsPaginatedImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {

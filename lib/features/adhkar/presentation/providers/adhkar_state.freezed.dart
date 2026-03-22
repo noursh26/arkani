@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -11,7 +12,7 @@ part of 'adhkar_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `private` fields.');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AdhkarState {
@@ -24,7 +25,8 @@ mixin _$AdhkarState {
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AdhkarStateCopyWith<AdhkarState> get copyWith => throw _privateConstructorUsedError;
+  $AdhkarStateCopyWith<AdhkarState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -33,15 +35,17 @@ abstract class $AdhkarStateCopyWith<$Res> {
           AdhkarState value, $Res Function(AdhkarState) then) =
       _$AdhkarStateCopyWithImpl<$Res, AdhkarState>;
   @useResult
-  $Res call({
-    bool isLoadingCategories,
-    bool isLoadingAdhkar,
-    bool isOffline,
-    List<AdhkarCategory> categories,
-    AdhkarCollection? currentCollection,
-    AdhkarCategory? selectedCategory,
-    String? error,
-  });
+  $Res call(
+      {bool isLoadingCategories,
+      bool isLoadingAdhkar,
+      bool isOffline,
+      List<AdhkarCategory> categories,
+      AdhkarCollection? currentCollection,
+      AdhkarCategory? selectedCategory,
+      String? error});
+
+  $AdhkarCollectionCopyWith<$Res>? get currentCollection;
+  $AdhkarCategoryCopyWith<$Res>? get selectedCategory;
 }
 
 /// @nodoc
@@ -96,6 +100,30 @@ class _$AdhkarStateCopyWithImpl<$Res, $Val extends AdhkarState>
               as String?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AdhkarCollectionCopyWith<$Res>? get currentCollection {
+    if (_value.currentCollection == null) {
+      return null;
+    }
+
+    return $AdhkarCollectionCopyWith<$Res>(_value.currentCollection!, (value) {
+      return _then(_value.copyWith(currentCollection: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AdhkarCategoryCopyWith<$Res>? get selectedCategory {
+    if (_value.selectedCategory == null) {
+      return null;
+    }
+
+    return $AdhkarCategoryCopyWith<$Res>(_value.selectedCategory!, (value) {
+      return _then(_value.copyWith(selectedCategory: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -106,15 +134,19 @@ abstract class _$$AdhkarStateImplCopyWith<$Res>
       __$$AdhkarStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    bool isLoadingCategories,
-    bool isLoadingAdhkar,
-    bool isOffline,
-    List<AdhkarCategory> categories,
-    AdhkarCollection? currentCollection,
-    AdhkarCategory? selectedCategory,
-    String? error,
-  });
+  $Res call(
+      {bool isLoadingCategories,
+      bool isLoadingAdhkar,
+      bool isOffline,
+      List<AdhkarCategory> categories,
+      AdhkarCollection? currentCollection,
+      AdhkarCategory? selectedCategory,
+      String? error});
+
+  @override
+  $AdhkarCollectionCopyWith<$Res>? get currentCollection;
+  @override
+  $AdhkarCategoryCopyWith<$Res>? get selectedCategory;
 }
 
 /// @nodoc
@@ -170,6 +202,7 @@ class __$$AdhkarStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$AdhkarStateImpl implements _AdhkarState {
   const _$AdhkarStateImpl(
       {this.isLoadingCategories = false,
@@ -194,7 +227,9 @@ class _$AdhkarStateImpl implements _AdhkarState {
   @override
   @JsonKey()
   List<AdhkarCategory> get categories {
-    return _categories;
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
   }
 
   @override

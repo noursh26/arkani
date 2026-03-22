@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -11,7 +12,7 @@ part of 'mosque.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `private` fields.');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Mosque _$MosqueFromJson(Map<String, dynamic> json) {
   return _Mosque.fromJson(json);
@@ -37,7 +38,14 @@ abstract class $MosqueCopyWith<$Res> {
   factory $MosqueCopyWith(Mosque value, $Res Function(Mosque) then) =
       _$MosqueCopyWithImpl<$Res, Mosque>;
   @useResult
-  $Res call({String placeId, String name, String address, double latitude, double longitude, double? rating, int distanceMeters});
+  $Res call(
+      {String placeId,
+      String name,
+      String address,
+      double latitude,
+      double longitude,
+      double? rating,
+      int distanceMeters});
 }
 
 /// @nodoc
@@ -101,7 +109,14 @@ abstract class _$$MosqueImplCopyWith<$Res> implements $MosqueCopyWith<$Res> {
       __$$MosqueImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String placeId, String name, String address, double latitude, double longitude, double? rating, int distanceMeters});
+  $Res call(
+      {String placeId,
+      String name,
+      String address,
+      double latitude,
+      double longitude,
+      double? rating,
+      int distanceMeters});
 }
 
 /// @nodoc
@@ -199,8 +214,10 @@ class _$MosqueImpl implements _Mosque {
             (identical(other.placeId, placeId) || other.placeId == placeId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.address, address) || other.address == address) &&
-            (identical(other.latitude, latitude) || other.latitude == latitude) &&
-            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
             (identical(other.rating, rating) || other.rating == rating) &&
             (identical(other.distanceMeters, distanceMeters) ||
                 other.distanceMeters == distanceMeters));

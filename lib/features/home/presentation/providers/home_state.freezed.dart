@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -11,15 +12,17 @@ part of 'home_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `private` fields.');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$HomeState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isOffline => throw _privateConstructorUsedError;
   PrayerTimes? get prayerTimes => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get todayNotification => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get motivationalMessage => throw _privateConstructorUsedError;
+  Map<String, dynamic>? get todayNotification =>
+      throw _privateConstructorUsedError;
+  Map<String, dynamic>? get motivationalMessage =>
+      throw _privateConstructorUsedError;
   bool get motivationalLoading => throw _privateConstructorUsedError;
   String? get motivationalError => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
@@ -28,7 +31,8 @@ mixin _$HomeState {
   bool get locationPermissionGranted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $HomeStateCopyWith<HomeState> get copyWith => throw _privateConstructorUsedError;
+  $HomeStateCopyWith<HomeState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -36,19 +40,20 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({
-    bool isLoading,
-    bool isOffline,
-    PrayerTimes? prayerTimes,
-    Map<String, dynamic>? todayNotification,
-    Map<String, dynamic>? motivationalMessage,
-    bool motivationalLoading,
-    String? motivationalError,
-    String? error,
-    String? currentPrayer,
-    DateTime? nextPrayerTime,
-    bool locationPermissionGranted,
-  });
+  $Res call(
+      {bool isLoading,
+      bool isOffline,
+      PrayerTimes? prayerTimes,
+      Map<String, dynamic>? todayNotification,
+      Map<String, dynamic>? motivationalMessage,
+      bool motivationalLoading,
+      String? motivationalError,
+      String? error,
+      String? currentPrayer,
+      DateTime? nextPrayerTime,
+      bool locationPermissionGranted});
+
+  $PrayerTimesCopyWith<$Res>? get prayerTimes;
 }
 
 /// @nodoc
@@ -123,6 +128,18 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
               as bool,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PrayerTimesCopyWith<$Res>? get prayerTimes {
+    if (_value.prayerTimes == null) {
+      return null;
+    }
+
+    return $PrayerTimesCopyWith<$Res>(_value.prayerTimes!, (value) {
+      return _then(_value.copyWith(prayerTimes: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -133,19 +150,21 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    bool isLoading,
-    bool isOffline,
-    PrayerTimes? prayerTimes,
-    Map<String, dynamic>? todayNotification,
-    Map<String, dynamic>? motivationalMessage,
-    bool motivationalLoading,
-    String? motivationalError,
-    String? error,
-    String? currentPrayer,
-    DateTime? nextPrayerTime,
-    bool locationPermissionGranted,
-  });
+  $Res call(
+      {bool isLoading,
+      bool isOffline,
+      PrayerTimes? prayerTimes,
+      Map<String, dynamic>? todayNotification,
+      Map<String, dynamic>? motivationalMessage,
+      bool motivationalLoading,
+      String? motivationalError,
+      String? error,
+      String? currentPrayer,
+      DateTime? nextPrayerTime,
+      bool locationPermissionGranted});
+
+  @override
+  $PrayerTimesCopyWith<$Res>? get prayerTimes;
 }
 
 /// @nodoc
@@ -185,11 +204,11 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           : prayerTimes // ignore: cast_nullable_to_non_nullable
               as PrayerTimes?,
       todayNotification: freezed == todayNotification
-          ? _value.todayNotification
+          ? _value._todayNotification
           : todayNotification // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
       motivationalMessage: freezed == motivationalMessage
-          ? _value.motivationalMessage
+          ? _value._motivationalMessage
           : motivationalMessage // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
       motivationalLoading: null == motivationalLoading
@@ -221,19 +240,22 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl(
       {this.isLoading = false,
       this.isOffline = false,
       this.prayerTimes,
-      this.todayNotification,
-      this.motivationalMessage,
+      final Map<String, dynamic>? todayNotification,
+      final Map<String, dynamic>? motivationalMessage,
       this.motivationalLoading = false,
       this.motivationalError,
       this.error,
       this.currentPrayer,
       this.nextPrayerTime,
-      this.locationPermissionGranted = false});
+      this.locationPermissionGranted = false})
+      : _todayNotification = todayNotification,
+        _motivationalMessage = motivationalMessage;
 
   @override
   @JsonKey()
@@ -243,10 +265,28 @@ class _$HomeStateImpl implements _HomeState {
   final bool isOffline;
   @override
   final PrayerTimes? prayerTimes;
+  final Map<String, dynamic>? _todayNotification;
   @override
-  final Map<String, dynamic>? todayNotification;
+  Map<String, dynamic>? get todayNotification {
+    final value = _todayNotification;
+    if (value == null) return null;
+    if (_todayNotification is EqualUnmodifiableMapView)
+      return _todayNotification;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
+  final Map<String, dynamic>? _motivationalMessage;
   @override
-  final Map<String, dynamic>? motivationalMessage;
+  Map<String, dynamic>? get motivationalMessage {
+    final value = _motivationalMessage;
+    if (value == null) return null;
+    if (_motivationalMessage is EqualUnmodifiableMapView)
+      return _motivationalMessage;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   @JsonKey()
   final bool motivationalLoading;
@@ -278,10 +318,10 @@ class _$HomeStateImpl implements _HomeState {
                 other.isOffline == isOffline) &&
             (identical(other.prayerTimes, prayerTimes) ||
                 other.prayerTimes == prayerTimes) &&
-            (identical(other.todayNotification, todayNotification) ||
-                other.todayNotification == todayNotification) &&
-            (identical(other.motivationalMessage, motivationalMessage) ||
-                other.motivationalMessage == motivationalMessage) &&
+            const DeepCollectionEquality()
+                .equals(other._todayNotification, _todayNotification) &&
+            const DeepCollectionEquality()
+                .equals(other._motivationalMessage, _motivationalMessage) &&
             (identical(other.motivationalLoading, motivationalLoading) ||
                 other.motivationalLoading == motivationalLoading) &&
             (identical(other.motivationalError, motivationalError) ||
@@ -291,7 +331,8 @@ class _$HomeStateImpl implements _HomeState {
                 other.currentPrayer == currentPrayer) &&
             (identical(other.nextPrayerTime, nextPrayerTime) ||
                 other.nextPrayerTime == nextPrayerTime) &&
-            (identical(other.locationPermissionGranted, locationPermissionGranted) ||
+            (identical(other.locationPermissionGranted,
+                    locationPermissionGranted) ||
                 other.locationPermissionGranted == locationPermissionGranted));
   }
 
@@ -301,8 +342,8 @@ class _$HomeStateImpl implements _HomeState {
       isLoading,
       isOffline,
       prayerTimes,
-      todayNotification,
-      motivationalMessage,
+      const DeepCollectionEquality().hash(_todayNotification),
+      const DeepCollectionEquality().hash(_motivationalMessage),
       motivationalLoading,
       motivationalError,
       error,

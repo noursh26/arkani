@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
@@ -11,7 +12,7 @@ part of 'rulings_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `private` fields.');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$RulingsState {
@@ -28,7 +29,8 @@ mixin _$RulingsState {
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $RulingsStateCopyWith<RulingsState> get copyWith => throw _privateConstructorUsedError;
+  $RulingsStateCopyWith<RulingsState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -37,19 +39,18 @@ abstract class $RulingsStateCopyWith<$Res> {
           RulingsState value, $Res Function(RulingsState) then) =
       _$RulingsStateCopyWithImpl<$Res, RulingsState>;
   @useResult
-  $Res call({
-    bool isLoadingTopics,
-    bool isLoadingRulings,
-    bool isLoadingMore,
-    bool isOffline,
-    List<RulingTopic> topics,
-    List<IslamicRuling> rulings,
-    int currentPage,
-    bool hasMore,
-    int? selectedTopicId,
-    String? searchQuery,
-    String? error,
-  });
+  $Res call(
+      {bool isLoadingTopics,
+      bool isLoadingRulings,
+      bool isLoadingMore,
+      bool isOffline,
+      List<RulingTopic> topics,
+      List<IslamicRuling> rulings,
+      int currentPage,
+      bool hasMore,
+      int? selectedTopicId,
+      String? searchQuery,
+      String? error});
 }
 
 /// @nodoc
@@ -134,19 +135,18 @@ abstract class _$$RulingsStateImplCopyWith<$Res>
       __$$RulingsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    bool isLoadingTopics,
-    bool isLoadingRulings,
-    bool isLoadingMore,
-    bool isOffline,
-    List<RulingTopic> topics,
-    List<IslamicRuling> rulings,
-    int currentPage,
-    bool hasMore,
-    int? selectedTopicId,
-    String? searchQuery,
-    String? error,
-  });
+  $Res call(
+      {bool isLoadingTopics,
+      bool isLoadingRulings,
+      bool isLoadingMore,
+      bool isOffline,
+      List<RulingTopic> topics,
+      List<IslamicRuling> rulings,
+      int currentPage,
+      bool hasMore,
+      int? selectedTopicId,
+      String? searchQuery,
+      String? error});
 }
 
 /// @nodoc
@@ -222,6 +222,7 @@ class __$$RulingsStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$RulingsStateImpl implements _RulingsState {
   const _$RulingsStateImpl(
       {this.isLoadingTopics = false,
@@ -254,14 +255,18 @@ class _$RulingsStateImpl implements _RulingsState {
   @override
   @JsonKey()
   List<RulingTopic> get topics {
-    return _topics;
+    if (_topics is EqualUnmodifiableListView) return _topics;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_topics);
   }
 
   final List<IslamicRuling> _rulings;
   @override
   @JsonKey()
   List<IslamicRuling> get rulings {
-    return _rulings;
+    if (_rulings is EqualUnmodifiableListView) return _rulings;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_rulings);
   }
 
   @override
@@ -295,14 +300,11 @@ class _$RulingsStateImpl implements _RulingsState {
                 other.isLoadingMore == isLoadingMore) &&
             (identical(other.isOffline, isOffline) ||
                 other.isOffline == isOffline) &&
-            const DeepCollectionEquality()
-                .equals(other._topics, _topics) &&
-            const DeepCollectionEquality()
-                .equals(other._rulings, _rulings) &&
+            const DeepCollectionEquality().equals(other._topics, _topics) &&
+            const DeepCollectionEquality().equals(other._rulings, _rulings) &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
-            (identical(other.hasMore, hasMore) ||
-                other.hasMore == hasMore) &&
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
             (identical(other.selectedTopicId, selectedTopicId) ||
                 other.selectedTopicId == selectedTopicId) &&
             (identical(other.searchQuery, searchQuery) ||

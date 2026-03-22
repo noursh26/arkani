@@ -1,6 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'prayer_times.dart';
 
@@ -17,9 +15,9 @@ _$PrayerTimesImpl _$$PrayerTimesImplFromJson(Map<String, dynamic> json) =>
       maghrib: json['maghrib'] as String,
       isha: json['isha'] as String,
       midnight: json['midnight'] as String?,
-      lastThird: json['lastThird'] as String?,
+      lastThird: json['last_third'] as String?,
       date: json['date'] as String,
-      hijriDate: json['hijriDate'] as String,
+      hijriDate: json['hijri_date'] as String,
       city: json['city'] as String?,
       country: json['country'] as String?,
     );
@@ -33,9 +31,9 @@ Map<String, dynamic> _$$PrayerTimesImplToJson(_$PrayerTimesImpl instance) =>
       'maghrib': instance.maghrib,
       'isha': instance.isha,
       'midnight': instance.midnight,
-      'lastThird': instance.lastThird,
+      'last_third': instance.lastThird,
       'date': instance.date,
-      'hijriDate': instance.hijriDate,
+      'hijri_date': instance.hijriDate,
       'city': instance.city,
       'country': instance.country,
     };
@@ -45,8 +43,8 @@ _$PrayerMetaImpl _$$PrayerMetaImplFromJson(Map<String, dynamic> json) =>
       timezone: json['timezone'] as String,
       method: json['method'] as String,
       school: json['school'] as String,
-      midnightMode: json['midnightMode'] as String,
-      latitudeAdjustment: json['latitudeAdjustment'] as String,
+      midnightMode: json['midnight_mode'] as String,
+      latitudeAdjustment: json['latitude_adjustment'] as String,
     );
 
 Map<String, dynamic> _$$PrayerMetaImplToJson(_$PrayerMetaImpl instance) =>
@@ -54,6 +52,6 @@ Map<String, dynamic> _$$PrayerMetaImplToJson(_$PrayerMetaImpl instance) =>
       'timezone': instance.timezone,
       'method': instance.method,
       'school': instance.school,
-      'midnightMode': instance.midnightMode,
-      'latitudeAdjustment': instance.latitudeAdjustment,
+      'midnight_mode': instance.midnightMode,
+      'latitude_adjustment': instance.latitudeAdjustment,
     };

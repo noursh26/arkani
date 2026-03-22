@@ -498,7 +498,7 @@
     },
     {
       "name": "android_alarm_manager_plus",
-      "version": "3.0.4",
+      "version": "5.0.0",
       "dependencies": [
         "flutter"
       ]

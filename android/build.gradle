@@ -3,11 +3,11 @@ class FlutterSdkExtension {
     int compileSdkVersion = 35
     int minSdkVersion = 21
     int targetSdkVersion = 35
-    String ndkVersion = "25.1.8937393"
+    String ndkVersion = "27.0.12077973"
 }
 
 buildscript {
-    ext.kotlin_version = '2.0.0'
+    ext.kotlin_version = '2.1.0'
     repositories {
         google()
         mavenCentral()
@@ -36,9 +36,9 @@ subprojects {
 subprojects {
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains.kotlin:kotlin-stdlib:2.0.0'
-            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.0'
-            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.0'
+            force 'org.jetbrains.kotlin:kotlin-stdlib:2.1.0'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.1.0'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.0'
         }
     }
 }

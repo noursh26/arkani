@@ -5,6 +5,7 @@
 .pub-cache/
 .pub/
 build/
+pubspec.lock
 *.g.dart
 *.freezed.dart
 *.mocks.dart
@@ -31,6 +32,7 @@ build/
 **/android/app/debug
 **/android/app/profile
 **/android/app/release
+**/android/.kotlin/errors/
 *.jks
 *.keystore
 
