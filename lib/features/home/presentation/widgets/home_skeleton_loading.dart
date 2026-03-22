@@ -12,44 +12,67 @@ class HomeSkeletonLoading extends StatelessWidget {
       baseColor: AppColors.divider,
       highlightColor: AppColors.background,
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Next Prayer Skeleton
+            // Header skeleton
             Container(
-              height: 180,
-              decoration: BoxDecoration(
+              height: 160,
+              decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Prayer Strip Skeleton
-            SizedBox(
-              height: 100,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                separatorBuilder: (_, __) => const SizedBox(width: 12),
-                itemBuilder: (_, __) => Container(
-                  width: 70,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 10),
 
-            // Notification Card Skeleton
-            Container(
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+            // Prayer times row skeleton
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: List.generate(5, (i) => Expanded(
+                  child: Container(
+                    height: 68,
+                    margin: EdgeInsets.only(left: i > 0 ? 6 : 0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                )),
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Quick actions skeleton
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: List.generate(3, (i) => Expanded(
+                  child: Container(
+                    height: 56,
+                    margin: EdgeInsets.only(left: i > 0 ? 8 : 0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                )),
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Notification card skeleton
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
           ],

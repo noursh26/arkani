@@ -69,7 +69,7 @@ class _RulingsPageState extends ConsumerState<RulingsPage> {
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            expandedHeight: 180,
+            expandedHeight: 100,
             floating: true,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(

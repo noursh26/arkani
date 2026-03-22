@@ -18,32 +18,34 @@ class LocationData {
 
 class LocationUtil {
   Future<LocationData> getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Check if location services are enabled
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return _defaultLocation();
-    }
-
-    // Check permission
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
+    try {
+      // Check if location services are enabled (with timeout)
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled()
+          .timeout(const Duration(seconds: 3), onTimeout: () => false);
+      if (!serviceEnabled) {
         return _defaultLocation();
       }
-    }
 
-    if (permission == LocationPermission.deniedForever) {
-      return _defaultLocation();
-    }
+      // Check permission (with timeout)
+      var permission = await Geolocator.checkPermission()
+          .timeout(const Duration(seconds: 3), onTimeout: () => LocationPermission.denied);
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission()
+            .timeout(const Duration(seconds: 5), onTimeout: () => LocationPermission.denied);
+        if (permission == LocationPermission.denied) {
+          return _defaultLocation();
+        }
+      }
 
-    try {
+      if (permission == LocationPermission.deniedForever) {
+        return _defaultLocation();
+      }
+
       final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.medium,
-      );
+      ).timeout(const Duration(seconds: 8), onTimeout: () {
+        throw Exception('Location timeout');
+      });
 
       return LocationData(
         latitude: position.latitude,
@@ -55,9 +57,14 @@ class LocationUtil {
   }
 
   Future<bool> requestPermission() async {
-    final permission = await Geolocator.requestPermission();
-    return permission == LocationPermission.whileInUse ||
-        permission == LocationPermission.always;
+    try {
+      final permission = await Geolocator.requestPermission()
+          .timeout(const Duration(seconds: 5), onTimeout: () => LocationPermission.denied);
+      return permission == LocationPermission.whileInUse ||
+          permission == LocationPermission.always;
+    } catch (_) {
+      return false;
+    }
   }
 
   LocationData _defaultLocation() {

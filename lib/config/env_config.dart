@@ -27,7 +27,7 @@ class EnvConfig {
   static bool get isProduction => _environment == Environment.production;
 
   static String get appName => _getOrDefault('APP_NAME', 'أركاني');
-  static String get apiBaseUrl => _getOrDefault('API_BASE_URL', 'http://localhost:8000/api');
+  static String get apiBaseUrl => _getOrDefault('API_BASE_URL', 'https://arkani.almostfa.site/api/v1/');
 
   static String _getOrDefault(String key, String defaultValue) {
     if (!_initialized) {

@@ -81,7 +81,7 @@ class _MosquesPageState extends ConsumerState<MosquesPage> {
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            expandedHeight: 120,
+            expandedHeight: 100,
             floating: true,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
@@ -284,134 +284,137 @@ class _MosqueDetailSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 40,
+              width: 36,
               height: 4,
               decoration: BoxDecoration(
                 color: AppColors.divider,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            const SizedBox(height: 24),
-            
-            // Mosque Icon
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [AppColors.primary, AppColors.primaryDark],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+            const SizedBox(height: 14),
+
+            // Mosque header row
+            Row(
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [AppColors.primary, AppColors.primaryDark],
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(Icons.mosque, color: Colors.white, size: 24),
                 ),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Icon(
-                Icons.mosque,
-                color: AppColors.onPrimary,
-                size: 40,
-              ),
-            ),
-            
-            const SizedBox(height: 20),
-            
-            // Name
-            Text(
-              mosque.name,
-              style: AppTypography.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            
-            const SizedBox(height: 8),
-            
-            // Distance badge
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColors.primaryContainer,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                _formatDistance(mosque.distanceMeters),
-                style: AppTypography.textTheme.labelLarge?.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        mosque.name,
+                        style: AppTypography.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryContainer,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              _formatDistance(mosque.distanceMeters),
+                              style: AppTypography.textTheme.labelSmall?.copyWith(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                          if (mosque.rating != null) ...[
+                            const SizedBox(width: 8),
+                            const Icon(Icons.star, color: AppColors.secondary, size: 14),
+                            const SizedBox(width: 2),
+                            Text(
+                              mosque.rating!.toStringAsFixed(1),
+                              style: AppTypography.textTheme.labelSmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
-            
-            const SizedBox(height: 16),
-            
+
+            const SizedBox(height: 10),
+
             // Address
             Row(
               children: [
-                const Icon(
-                  Icons.location_on,
-                  color: AppColors.textSecondary,
-                  size: 20,
-                ),
-                const SizedBox(width: 8),
+                const Icon(Icons.location_on_outlined, color: AppColors.textTertiary, size: 16),
+                const SizedBox(width: 6),
                 Expanded(
                   child: Text(
                     mosque.address,
-                    style: AppTypography.textTheme.bodyMedium?.copyWith(
+                    style: AppTypography.textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
+                      fontSize: 11,
                     ),
                   ),
                 ),
               ],
             ),
-            
-            // Rating
-            if (mosque.rating != null) ...[
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.star,
-                    color: AppColors.secondary,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    mosque.rating!.toStringAsFixed(1),
-                    style: AppTypography.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-            
-            const SizedBox(height: 24),
-            
+
+            const SizedBox(height: 14),
+
             // Directions Button
             SizedBox(
               width: double.infinity,
+              height: 44,
               child: ElevatedButton.icon(
                 onPressed: () => _openDirections(context),
-                icon: const Icon(Icons.directions),
-                label: const Text('الاتجاهات'),
+                icon: const Icon(Icons.directions, size: 18),
+                label: Text(
+                  'الاتجاهات',
+                  style: AppTypography.textTheme.labelLarge?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.onPrimary,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 0,
                 ),
               ),
             ),
-            
-            const SizedBox(height: 8),
+
+            const SizedBox(height: 6),
           ],
         ),
       ),

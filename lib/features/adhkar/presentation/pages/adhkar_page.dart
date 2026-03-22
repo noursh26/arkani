@@ -248,7 +248,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            expandedHeight: 120,
+            expandedHeight: 100,
             floating: true,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
@@ -332,21 +332,22 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(14, 12, 14, 4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'اختر مجموعة الأذكار',
-                    style: AppTypography.textTheme.titleMedium?.copyWith(
+                    style: AppTypography.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 2),
                   Text(
                     'مجموعات مختارة من الأذكار والأدعية',
-                    style: AppTypography.textTheme.bodyMedium?.copyWith(
+                    style: AppTypography.textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
+                      fontSize: 11,
                     ),
                   ),
                 ],
@@ -354,13 +355,13 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                childAspectRatio: 1.1,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 1.2,
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
@@ -418,55 +419,56 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
       children: [
         // Category Header
         Container(
-          margin: const EdgeInsets.all(16),
-          padding: const EdgeInsets.all(20),
+          margin: const EdgeInsets.fromLTRB(12, 10, 12, 6),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [AppColors.primary, AppColors.primaryDark],
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(14),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withValues(alpha:0.3),
-                blurRadius: 12,
-                offset: const Offset(0, 6),
+                color: AppColors.primary.withValues(alpha:0.2),
+                blurRadius: 8,
+                offset: const Offset(0, 3),
               ),
             ],
           ),
           child: Row(
             children: [
               Container(
-                width: 60,
-                height: 60,
+                width: 42,
+                height: 42,
                 decoration: BoxDecoration(
                   color: AppColors.onPrimary.withValues(alpha:0.2),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
                   Icons.menu_book,
                   color: AppColors.onPrimary,
-                  size: 32,
+                  size: 22,
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       collection.category.name,
-                      style: AppTypography.textTheme.titleMedium?.copyWith(
+                      style: AppTypography.textTheme.titleSmall?.copyWith(
                         color: AppColors.onPrimary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       '${collection.adhkar.length} ذكر',
-                      style: AppTypography.textTheme.bodyMedium?.copyWith(
+                      style: AppTypography.textTheme.bodySmall?.copyWith(
                         color: AppColors.onPrimary.withValues(alpha:0.9),
+                        fontSize: 11,
                       ),
                     ),
                   ],

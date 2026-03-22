@@ -24,15 +24,27 @@ void main() async {
   tz_data.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('Africa/Cairo'));
 
-  // Initialize environment
-  await EnvConfig.initialize(Environment.development);
+  // Initialize environment - wrapped in try-catch for safety
+  try {
+    await EnvConfig.initialize(Environment.development);
+  } catch (e) {
+    debugPrint('EnvConfig init error: $e');
+  }
 
   // Initialize Hive
-  await HiveConfig.initialize();
+  try {
+    await HiveConfig.initialize();
+  } catch (e) {
+    debugPrint('Hive init error: $e');
+  }
 
   // Initialize Notification Service
-  final notificationService = NotificationService();
-  await notificationService.initialize();
+  try {
+    final notificationService = NotificationService();
+    await notificationService.initialize();
+  } catch (e) {
+    debugPrint('Notification init error: $e');
+  }
 
   runApp(
     const ProviderScope(

@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/services/notification_service.dart';
@@ -14,364 +14,459 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
-  late final AnimationController _mosqueController;
-  late final AnimationController _textController;
-  late final AnimationController _logoPulseController;
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _fadeIn;
+  late final Animation<double> _scaleUp;
+  late final Animation<double> _textFade;
+  late final Animation<double> _shimmer;
   bool _isNavigating = false;
-  bool _animationsComplete = false;
 
   @override
   void initState() {
     super.initState();
-    _mosqueController = AnimationController(
+
+    _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    );
-    _textController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-    _logoPulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 2500),
     );
 
+    _fadeIn = CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.0, 0.4, curve: Curves.easeOut),
+    );
+
+    _scaleUp = Tween<double>(begin: 0.6, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.5, curve: Curves.easeOutBack),
+      ),
+    );
+
+    _textFade = CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.3, 0.7, curve: Curves.easeOut),
+    );
+
+    _shimmer = CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.6, 1.0, curve: Curves.easeInOut),
+    );
+
+    _controller.forward();
     _startInitialization();
   }
 
   @override
   void dispose() {
-    _mosqueController.dispose();
-    _textController.dispose();
-    _logoPulseController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   Future<void> _startInitialization() async {
-    // Run animations and initialization in parallel
-    await Future.wait([
-      _runAnimations(),
-      _initializeApp(),
-    ]);
-
-    // Ensure we don't navigate twice
-    if (_animationsComplete && mounted && !_isNavigating) {
-      _isNavigating = true;
-      _navigateToNextScreen();
-    }
-  }
-
-  Future<void> _runAnimations() async {
-    // Start logo pulse animation
-    _logoPulseController.repeat(reverse: true);
-
-    // Start mosque animation
-    await _mosqueController.forward();
-
-    // Start text animation
-    await _textController.forward();
-
-    // Stop pulse and complete
-    await _logoPulseController.forward(from: _logoPulseController.value);
-    _logoPulseController.stop();
-
-    _animationsComplete = true;
-  }
-
-  Future<void> _initializeApp() async {
-    // Minimum splash duration for better UX
-    final minDuration = Future.delayed(const Duration(seconds: 3));
-
-    // Run initialization tasks
-    final initTasks = Future.wait([
-      _checkLocationPermission(),
-      _prepareNotificationService(),
-    ], eagerError: false);
-
-    // Wait for both minimum duration and init tasks
-    await Future.wait([minDuration, initTasks]);
-  }
-
-  Future<void> _prepareNotificationService() async {
     try {
-      // Just initialize the service, don't request permission yet
-      final notificationService = NotificationService();
-      await notificationService.initialize();
+      // Safety timeout: ALWAYS navigate after max 5 seconds
+      await Future.any([
+        _doInit(),
+        Future.delayed(const Duration(seconds: 5)),
+      ]);
     } catch (e) {
-      debugPrint('Notification service initialization error: $e');
+      debugPrint('Splash init error: $e');
     }
+
+    // Always navigate regardless of what happened
+    _navigate();
   }
 
-  Future<void> _checkLocationPermission() async {
-    try {
-      // Check if location services are enabled
-      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        debugPrint('Location services disabled');
-        return;
-      }
-
-      // Check permission
-      var permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        // Request permission but don't block
-        permission = await Geolocator.requestPermission().timeout(
-          const Duration(seconds: 5),
-          onTimeout: () => LocationPermission.denied,
-        );
-      }
-    } catch (e) {
-      debugPrint('Location permission error: $e');
-    }
+  Future<void> _doInit() async {
+    // Minimum display time for animations
+    await Future.delayed(const Duration(milliseconds: 2800));
   }
 
-  Future<void> _navigateToNextScreen() async {
-    if (!mounted) return;
+  void _navigate() {
+    if (_isNavigating || !mounted) return;
+    _isNavigating = true;
 
+    // Determine destination
+    _getDestination().then((route) {
+      if (mounted) context.go(route);
+    }).catchError((_) {
+      if (mounted) context.go('/');
+    });
+  }
+
+  Future<String> _getDestination() async {
     try {
       final notificationService = NotificationService();
-      final hasRequested = await notificationService.hasRequestedPermission();
+      final hasRequested = await notificationService
+          .hasRequestedPermission()
+          .timeout(const Duration(seconds: 2), onTimeout: () => true);
 
-      if (!mounted) return;
-
-      if (!hasRequested) {
-        // First launch - show notification permission screen
-        context.go('/notification-permission');
-      } else {
-        // Already requested - go to home
-        context.go('/');
-      }
-    } catch (e) {
-      debugPrint('Navigation error: $e');
-      // Fallback to home screen
-      if (mounted) {
-        context.go('/');
-      }
+      if (!hasRequested) return '/notification-permission';
+      return '/';
+    } catch (_) {
+      return '/';
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
       body: Container(
-        decoration: BoxDecoration(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.primary.withValues(alpha: 0.15),
-              AppColors.background,
+              Color(0xFF0D5E4A),
+              Color(0xFF0A4D3C),
+              Color(0xFF073D2F),
             ],
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Logo with pulse animation
-              AnimatedBuilder(
-                animation: _logoPulseController,
+        child: Stack(
+          children: [
+            // Islamic geometric pattern background
+            Positioned.fill(
+              child: CustomPaint(
+                painter: _IslamicPatternPainter(
+                  color: Colors.white.withValues(alpha: 0.03),
+                ),
+              ),
+            ),
+
+            // Radial glow behind logo
+            Positioned(
+              top: screenSize.height * 0.2,
+              left: 0,
+              right: 0,
+              child: AnimatedBuilder(
+                animation: _fadeIn,
                 builder: (context, child) {
-                  final scale = 1.0 + (_logoPulseController.value * 0.05);
-                  return Transform.scale(
-                    scale: scale,
+                  return Opacity(
+                    opacity: _fadeIn.value * 0.4,
                     child: child,
                   );
                 },
-                child: AnimatedBuilder(
-                  animation: _mosqueController,
-                  builder: (context, child) {
-                    return Opacity(
-                      opacity: _mosqueController.value,
-                      child: Transform.scale(
-                        scale: 0.7 + (_mosqueController.value * 0.3),
-                        child: child,
+                child: Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.secondary.withValues(alpha: 0.15),
+                        blurRadius: 120,
+                        spreadRadius: 60,
                       ),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.primary.withValues(alpha: 0.1),
-                    ),
-                    child: const _MosqueSilhouette(size: 150),
+                    ],
                   ),
                 ),
               ),
+            ),
 
-              const SizedBox(height: 40),
+            // Main content
+            SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Mosque icon with crescent
+                    AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, child) {
+                        return Opacity(
+                          opacity: _fadeIn.value,
+                          child: Transform.scale(
+                            scale: _scaleUp.value,
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 120,
+                        height: 120,
+                        child: CustomPaint(
+                          painter: _MosquePainter(),
+                        ),
+                      ),
+                    ),
 
-              // App Name Animation
-              AnimatedBuilder(
-                animation: _textController,
+                    const SizedBox(height: 28),
+
+                    // App name
+                    AnimatedBuilder(
+                      animation: _textFade,
+                      builder: (context, child) {
+                        return Opacity(
+                          opacity: _textFade.value,
+                          child: Transform.translate(
+                            offset: Offset(0, 16 * (1 - _textFade.value)),
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'أركـانـي',
+                        style: AppTypography.arabicTitle.copyWith(
+                          fontSize: 42,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 4,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black.withValues(alpha: 0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 6),
+
+                    // Decorative divider
+                    AnimatedBuilder(
+                      animation: _textFade,
+                      builder: (context, child) {
+                        return Opacity(
+                          opacity: _textFade.value,
+                          child: child,
+                        );
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 32,
+                            height: 1,
+                            color: AppColors.secondary.withValues(alpha: 0.6),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(
+                            Icons.star,
+                            size: 8,
+                            color: AppColors.secondary.withValues(alpha: 0.8),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            width: 32,
+                            height: 1,
+                            color: AppColors.secondary.withValues(alpha: 0.6),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // Subtitle
+                    AnimatedBuilder(
+                      animation: _textFade,
+                      builder: (context, child) {
+                        return Opacity(
+                          opacity: _textFade.value * 0.8,
+                          child: child,
+                        );
+                      },
+                      child: Text(
+                        'رفيقك في طاعة الله',
+                        style: AppTypography.textTheme.bodyMedium?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.7),
+                          fontSize: 14,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 48),
+
+                    // Loading indicator
+                    AnimatedBuilder(
+                      animation: _shimmer,
+                      builder: (context, child) {
+                        return Opacity(
+                          opacity: _shimmer.value,
+                          child: child,
+                        );
+                      },
+                      child: SizedBox(
+                        width: 28,
+                        height: 28,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppColors.secondary.withValues(alpha: 0.7),
+                          backgroundColor:
+                              Colors.white.withValues(alpha: 0.1),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Bottom Quran verse
+            Positioned(
+              bottom: 32,
+              left: 24,
+              right: 24,
+              child: AnimatedBuilder(
+                animation: _shimmer,
                 builder: (context, child) {
                   return Opacity(
-                    opacity: _textController.value,
-                    child: Transform.translate(
-                      offset: Offset(0, 30 * (1 - _textController.value)),
-                      child: child,
-                    ),
+                    opacity: _shimmer.value * 0.5,
+                    child: child,
                   );
                 },
-                child: Column(
-                  children: [
-                    Text(
-                      'أركاني',
-                      style: AppTypography.arabicTitle.copyWith(
-                        fontSize: 52,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 2,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'تطبيق إسلامي شامل',
-                      style: AppTypography.textTheme.bodyLarge?.copyWith(
-                        color: AppColors.textSecondary,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  '﴿ وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ ﴾',
+                  textAlign: TextAlign.center,
+                  style: AppTypography.textTheme.bodySmall?.copyWith(
+                    color: Colors.white.withValues(alpha: 0.5),
+                    fontSize: 12,
+                    height: 1.6,
+                  ),
                 ),
               ),
-
-              const SizedBox(height: 60),
-
-              // Loading indicator with fade in
-              AnimatedBuilder(
-                animation: _textController,
-                builder: (context, child) {
-                  if (_textController.value < 1.0) {
-                    return const SizedBox.shrink();
-                  }
-                  return child!;
-                },
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: CircularProgressIndicator(
-                        color: AppColors.primary,
-                        strokeWidth: 3,
-                        backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'جاري التحميل...',
-                      style: AppTypography.textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondary.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _MosqueSilhouette extends StatelessWidget {
-  final double size;
-
-  const _MosqueSilhouette({required this.size});
+// Islamic geometric pattern painter
+class _IslamicPatternPainter extends CustomPainter {
+  final Color color;
+  _IslamicPatternPainter({required this.color});
 
   @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size(size, size * 0.9),
-      painter: _MosquePainter(),
-    );
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.5;
+
+    const spacing = 48.0;
+    for (double y = 0; y < size.height; y += spacing) {
+      for (double x = 0; x < size.width; x += spacing) {
+        _drawIslamicStar(canvas, Offset(x, y), spacing * 0.35, paint);
+      }
+    }
   }
+
+  void _drawIslamicStar(Canvas canvas, Offset center, double radius, Paint paint) {
+    final path = Path();
+    for (int i = 0; i < 8; i++) {
+      final angle = (i * math.pi / 4) - math.pi / 8;
+      final outerX = center.dx + radius * math.cos(angle);
+      final outerY = center.dy + radius * math.sin(angle);
+      final innerAngle = angle + math.pi / 8;
+      final innerX = center.dx + (radius * 0.4) * math.cos(innerAngle);
+      final innerY = center.dy + (radius * 0.4) * math.sin(innerAngle);
+
+      if (i == 0) {
+        path.moveTo(outerX, outerY);
+      } else {
+        path.lineTo(outerX, outerY);
+      }
+      path.lineTo(innerX, innerY);
+    }
+    path.close();
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
+// Mosque silhouette painter
 class _MosquePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.primary
+      ..color = Colors.white
       ..style = PaintingStyle.fill;
 
-    final path = Path();
-    
-    final centerX = size.width / 2;
-    final baseY = size.height * 0.85;
-    final scale = size.width / 200;
+    final cx = size.width / 2;
+    final baseY = size.height * 0.88;
+    final s = size.width / 160;
 
     // Main dome
-    path.moveTo(centerX - 30 * scale, baseY - 60 * scale);
-    path.quadraticBezierTo(
-      centerX, baseY - 110 * scale,
-      centerX + 30 * scale, baseY - 60 * scale,
-    );
-    
-    // Left minaret
-    path.moveTo(centerX - 60 * scale, baseY);
-    path.lineTo(centerX - 60 * scale, baseY - 80 * scale);
-    path.lineTo(centerX - 50 * scale, baseY - 80 * scale);
-    path.lineTo(centerX - 50 * scale, baseY);
-    
-    // Left minaret top
-    path.moveTo(centerX - 65 * scale, baseY - 80 * scale);
-    path.lineTo(centerX - 45 * scale, baseY - 80 * scale);
-    path.lineTo(centerX - 55 * scale, baseY - 95 * scale);
-    path.close();
-    
-    // Right minaret
-    path.moveTo(centerX + 60 * scale, baseY);
-    path.lineTo(centerX + 60 * scale, baseY - 80 * scale);
-    path.lineTo(centerX + 50 * scale, baseY - 80 * scale);
-    path.lineTo(centerX + 50 * scale, baseY);
-    
-    // Right minaret top
-    path.moveTo(centerX + 65 * scale, baseY - 80 * scale);
-    path.lineTo(centerX + 45 * scale, baseY - 80 * scale);
-    path.lineTo(centerX + 55 * scale, baseY - 95 * scale);
-    path.close();
-    
-    // Main building body
-    path.addRect(Rect.fromLTRB(
-      centerX - 45 * scale,
-      baseY - 60 * scale,
-      centerX + 45 * scale,
-      baseY,
-    ));
-    
-    // Entrance arch
-    path.moveTo(centerX - 15 * scale, baseY);
-    path.quadraticBezierTo(
-      centerX, baseY - 25 * scale,
-      centerX + 15 * scale, baseY,
-    );
-    path.close();
+    final domePath = Path();
+    domePath.moveTo(cx - 28 * s, baseY - 45 * s);
+    domePath.quadraticBezierTo(cx, baseY - 88 * s, cx + 28 * s, baseY - 45 * s);
+    canvas.drawPath(domePath, paint);
 
-    // Draw main shape
-    canvas.drawPath(path, paint);
-    
-    // Draw crescent moon
-    final moonPaint = Paint()
+    // Dome finial (crescent)
+    final crescentPaint = Paint()
       ..color = AppColors.secondary
       ..style = PaintingStyle.fill;
-    
-    final moonPath = Path();
-    final moonCenter = Offset(centerX, baseY - 75 * scale);
-    final moonRadius = 8 * scale;
-    
-    moonPath.addArc(
-      Rect.fromCircle(center: moonCenter, radius: moonRadius),
-      -0.5,
-      5.5,
+    canvas.drawCircle(Offset(cx, baseY - 85 * s), 4 * s, crescentPaint);
+    canvas.drawCircle(
+      Offset(cx + 2 * s, baseY - 86 * s),
+      3 * s,
+      Paint()..color = const Color(0xFF0A4D3C),
     );
-    
-    canvas.drawPath(moonPath, moonPaint);
+
+    // Building body
+    canvas.drawRect(
+      Rect.fromLTRB(cx - 35 * s, baseY - 45 * s, cx + 35 * s, baseY),
+      paint,
+    );
+
+    // Left minaret
+    canvas.drawRect(
+      Rect.fromLTRB(cx - 52 * s, baseY, cx - 44 * s, baseY - 65 * s),
+      paint,
+    );
+    // Left minaret cap
+    final leftCap = Path();
+    leftCap.moveTo(cx - 56 * s, baseY - 65 * s);
+    leftCap.lineTo(cx - 48 * s, baseY - 78 * s);
+    leftCap.lineTo(cx - 40 * s, baseY - 65 * s);
+    leftCap.close();
+    canvas.drawPath(leftCap, paint);
+
+    // Right minaret
+    canvas.drawRect(
+      Rect.fromLTRB(cx + 44 * s, baseY, cx + 52 * s, baseY - 65 * s),
+      paint,
+    );
+    // Right minaret cap
+    final rightCap = Path();
+    rightCap.moveTo(cx + 40 * s, baseY - 65 * s);
+    rightCap.lineTo(cx + 48 * s, baseY - 78 * s);
+    rightCap.lineTo(cx + 56 * s, baseY - 65 * s);
+    rightCap.close();
+    canvas.drawPath(rightCap, paint);
+
+    // Entrance arch
+    final archPaint = Paint()
+      ..color = const Color(0xFF0A4D3C)
+      ..style = PaintingStyle.fill;
+    final archPath = Path();
+    archPath.moveTo(cx - 10 * s, baseY);
+    archPath.quadraticBezierTo(cx, baseY - 20 * s, cx + 10 * s, baseY);
+    archPath.close();
+    canvas.drawPath(archPath, archPaint);
+
+    // Small side arches
+    for (final offsetX in [-22.0, 22.0]) {
+      final smallArch = Path();
+      smallArch.moveTo(cx + (offsetX - 5) * s, baseY);
+      smallArch.quadraticBezierTo(
+        cx + offsetX * s, baseY - 12 * s, cx + (offsetX + 5) * s, baseY);
+      smallArch.close();
+      canvas.drawPath(smallArch, archPaint);
+    }
   }
 
   @override

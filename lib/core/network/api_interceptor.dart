@@ -13,26 +13,37 @@ class ApiInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     // Check connectivity
-    final connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      handler.reject(
-        DioException(
-          requestOptions: options,
-          error: const NetworkException('لا يوجد اتصال بالإنترنت'),
-          type: DioExceptionType.connectionError,
-        ),
-      );
-      return;
+    try {
+      final connectivityResult = await Connectivity().checkConnectivity();
+      final hasConnection = connectivityResult is List
+          ? (connectivityResult as List).any((r) => r != ConnectivityResult.none)
+          : connectivityResult != ConnectivityResult.none;
+      if (!hasConnection) {
+        handler.reject(
+          DioException(
+            requestOptions: options,
+            error: const NetworkException('لا يوجد اتصال بالإنترنت'),
+            type: DioExceptionType.connectionError,
+          ),
+        );
+        return;
+      }
+    } catch (_) {
+      // If connectivity check fails, proceed anyway and let Dio handle errors
     }
 
     // Add device headers
-    final deviceInfo = await _deviceInfoUtil.getDeviceInfo();
-    options.headers.addAll({
-      'X-Device-ID': deviceInfo.deviceId,
-      'X-Platform': deviceInfo.platform,
-      'X-App-Version': deviceInfo.appVersion,
-      'Accept-Language': 'ar',
-    });
+    try {
+      final deviceInfo = await _deviceInfoUtil.getDeviceInfo();
+      options.headers.addAll({
+        'X-Device-ID': deviceInfo.deviceId,
+        'X-Platform': deviceInfo.platform,
+        'X-App-Version': deviceInfo.appVersion,
+        'Accept-Language': 'ar',
+      });
+    } catch (_) {
+      options.headers['Accept-Language'] = 'ar';
+    }
 
     handler.next(options);
   }
