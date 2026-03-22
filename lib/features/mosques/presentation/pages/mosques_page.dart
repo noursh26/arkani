@@ -266,8 +266,10 @@ class _MosqueDetailSheet extends StatelessWidget {
   const _MosqueDetailSheet({required this.mosque});
 
   Future<void> _openDirections(BuildContext context) async {
-    final url = 'https://www.google.com/maps/dir/?api=1&destination=${mosque.latitude},${mosque.longitude}';
-    final uri = Uri.parse(url);
+    final uri = Uri.https('www.google.com', '/maps/dir/', {
+      'api': '1',
+      'destination': '${mosque.latitude},${mosque.longitude}',
+    });
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
