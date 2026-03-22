@@ -216,7 +216,7 @@ class _RulingsPageState extends ConsumerState<RulingsPage> {
                                       onTap: () => _showRulingDetail(ruling),
                                     ).animate().fadeIn(
                                       duration: 400.ms,
-                                      delay: (index * 50).ms,
+                                      delay: (index.clamp(0, 10) * 50).ms,
                                     ).slideY(begin: 0.2, end: 0);
                                   },
                                 ),

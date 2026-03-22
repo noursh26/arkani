@@ -373,7 +373,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                     },
                   ).animate().fadeIn(
                     duration: 400.ms,
-                    delay: (index * 100).ms,
+                    delay: (index.clamp(0, 8) * 100).ms,
                   ).slideY(begin: 0.2, end: 0);
                 },
                 childCount: state.categories.length,
@@ -492,7 +492,7 @@ class _AdhkarPageState extends ConsumerState<AdhkarPage> {
                 fontSize: fontSize,
               ).animate().fadeIn(
                 duration: 400.ms,
-                delay: (index * 50).ms,
+                delay: (index.clamp(0, 10) * 50).ms,
               );
             },
           ),
