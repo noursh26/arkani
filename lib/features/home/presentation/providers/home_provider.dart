@@ -22,6 +22,10 @@ class HomeNotifier extends _$HomeNotifier {
 
   @override
   HomeState build() {
+    // Register dispose callback for timer cleanup
+    ref.onDispose(() {
+      _timer?.cancel();
+    });
     return const HomeState();
   }
 
@@ -179,9 +183,11 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   void _calculateNextPrayer(PrayerTimes prayerTimes) {
+    _timer?.cancel();
+
     final now = DateTime.now();
     final today = now.toIso8601String().split('T')[0];
-    
+
     final prayers = [
       {'name': 'الفجر', 'time': DateTime.parse('$today ${prayerTimes.fajr}')},
       {'name': 'الشروق', 'time': DateTime.parse('$today ${prayerTimes.sunrise}')},
@@ -214,10 +220,18 @@ class HomeNotifier extends _$HomeNotifier {
       nextPrayerTime: nextPrayer['time'] as DateTime,
     );
 
-    // Start countdown timer
-    _timer?.cancel();
+    // Start countdown timer - only update UI, don't recalculate prayers
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      _calculateNextPrayer(prayerTimes);
+      // Just trigger UI refresh for countdown display
+      // The state already has nextPrayerTime, widgets calculate remaining time
+      if (state.nextPrayerTime != null && DateTime.now().isAfter(state.nextPrayerTime!)) {
+        // Prayer time passed, recalculate
+        _timer?.cancel();
+        _calculateNextPrayer(prayerTimes);
+      } else {
+        // Just refresh UI without changing state
+        state = state.copyWith();
+      }
     });
   }
 

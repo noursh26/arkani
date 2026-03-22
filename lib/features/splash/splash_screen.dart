@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,7 +17,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
   late final AnimationController _mosqueController;
   late final AnimationController _textController;
-  bool _locationChecked = false;
+  late final AnimationController _logoPulseController;
+  bool _isNavigating = false;
+  bool _animationsComplete = false;
 
   @override
   void initState() {
@@ -31,75 +32,122 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     );
+    _logoPulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
 
-    _startAnimation();
+    _startInitialization();
   }
 
   @override
   void dispose() {
     _mosqueController.dispose();
     _textController.dispose();
+    _logoPulseController.dispose();
     super.dispose();
   }
 
-  Future<void> _startAnimation() async {
-    // Start with a timeout to ensure we never get stuck
-    final timeout = Future.delayed(const Duration(seconds: 5));
-    
-    // Start mosque animation
-    await _mosqueController.forward();
-    
-    // Start text animation
-    await _textController.forward();
-    
-    // Check location permission with timeout
-    await Future.any([
-      _checkLocationPermission(),
-      timeout,
+  Future<void> _startInitialization() async {
+    // Run animations and initialization in parallel
+    await Future.wait([
+      _runAnimations(),
+      _initializeApp(),
     ]);
-    
-    // Check notification permission and navigate accordingly with timeout
-    await Future.any([
-      _checkNotificationPermission(),
-      timeout,
-    ]);
+
+    // Ensure we don't navigate twice
+    if (_animationsComplete && mounted && !_isNavigating) {
+      _isNavigating = true;
+      _navigateToNextScreen();
+    }
   }
 
-  Future<void> _checkNotificationPermission() async {
-    final notificationService = NotificationService();
-    
-    // Check if permission has been requested before
-    final hasRequested = await notificationService.hasRequestedPermission();
-    
-    if (!hasRequested && mounted) {
-      // First launch - show notification permission screen
-      context.go('/notification-permission');
-    } else if (mounted) {
-      // Already requested or permission denied - go to home
-      context.go('/');
+  Future<void> _runAnimations() async {
+    // Start logo pulse animation
+    _logoPulseController.repeat(reverse: true);
+
+    // Start mosque animation
+    await _mosqueController.forward();
+
+    // Start text animation
+    await _textController.forward();
+
+    // Stop pulse and complete
+    await _logoPulseController.forward(from: _logoPulseController.value);
+    _logoPulseController.stop();
+
+    _animationsComplete = true;
+  }
+
+  Future<void> _initializeApp() async {
+    // Minimum splash duration for better UX
+    final minDuration = Future.delayed(const Duration(seconds: 3));
+
+    // Run initialization tasks
+    final initTasks = Future.wait([
+      _checkLocationPermission(),
+      _prepareNotificationService(),
+    ], eagerError: false);
+
+    // Wait for both minimum duration and init tasks
+    await Future.wait([minDuration, initTasks]);
+  }
+
+  Future<void> _prepareNotificationService() async {
+    try {
+      // Just initialize the service, don't request permission yet
+      final notificationService = NotificationService();
+      await notificationService.initialize();
+    } catch (e) {
+      debugPrint('Notification service initialization error: $e');
     }
   }
 
   Future<void> _checkLocationPermission() async {
-    if (_locationChecked) return;
-    _locationChecked = true;
-
     try {
       // Check if location services are enabled
       final serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        // Don't block, just continue with default location
+        debugPrint('Location services disabled');
         return;
       }
 
       // Check permission
       var permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
+        // Request permission but don't block
+        permission = await Geolocator.requestPermission().timeout(
+          const Duration(seconds: 5),
+          onTimeout: () => LocationPermission.denied,
+        );
       }
     } catch (e) {
-      // Continue without location if there's an error
       debugPrint('Location permission error: $e');
+    }
+  }
+
+  Future<void> _navigateToNextScreen() async {
+    if (!mounted) return;
+
+    try {
+      final notificationService = NotificationService();
+      final hasRequested = await notificationService.hasRequestedPermission();
+
+      if (!mounted) return;
+
+      if (!hasRequested) {
+        // First launch - show notification permission screen
+        context.go('/notification-permission');
+      } else {
+        // Already requested - go to home
+        context.go('/');
+      }
+    } catch (e) {
+      debugPrint('Navigation error: $e');
+      // Fallback to home screen
+      if (mounted) {
+        context.go('/');
+      }
     }
   }
 
@@ -113,7 +161,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.primary.withValues(alpha:0.1),
+              AppColors.primary.withValues(alpha: 0.15),
               AppColors.background,
             ],
           ),
@@ -122,23 +170,40 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Mosque Silhouette Animation
+              // Logo with pulse animation
               AnimatedBuilder(
-                animation: _mosqueController,
+                animation: _logoPulseController,
                 builder: (context, child) {
-                  return Opacity(
-                    opacity: _mosqueController.value,
-                    child: Transform.scale(
-                      scale: 0.8 + (_mosqueController.value * 0.2),
-                      child: child,
-                    ),
+                  final scale = 1.0 + (_logoPulseController.value * 0.05);
+                  return Transform.scale(
+                    scale: scale,
+                    child: child,
                   );
                 },
-                child: const _MosqueSilhouette(size: 180),
+                child: AnimatedBuilder(
+                  animation: _mosqueController,
+                  builder: (context, child) {
+                    return Opacity(
+                      opacity: _mosqueController.value,
+                      child: Transform.scale(
+                        scale: 0.7 + (_mosqueController.value * 0.3),
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.primary.withValues(alpha: 0.1),
+                    ),
+                    child: const _MosqueSilhouette(size: 150),
+                  ),
+                ),
               ),
-              
+
               const SizedBox(height: 40),
-              
+
               // App Name Animation
               AnimatedBuilder(
                 animation: _textController,
@@ -146,7 +211,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                   return Opacity(
                     opacity: _textController.value,
                     child: Transform.translate(
-                      offset: Offset(0, 20 * (1 - _textController.value)),
+                      offset: Offset(0, 30 * (1 - _textController.value)),
                       child: child,
                     ),
                   );
@@ -156,30 +221,56 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                     Text(
                       'أركاني',
                       style: AppTypography.arabicTitle.copyWith(
-                        fontSize: 48,
+                        fontSize: 52,
                         color: AppColors.primary,
                         fontWeight: FontWeight.w800,
+                        letterSpacing: 2,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     Text(
                       'تطبيق إسلامي شامل',
                       style: AppTypography.textTheme.bodyLarge?.copyWith(
                         color: AppColors.textSecondary,
+                        fontSize: 18,
                       ),
                     ),
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 60),
-              
-              // Loading indicator
-              if (_textController.isCompleted)
-                const CircularProgressIndicator(
-                  color: AppColors.primary,
-                  strokeWidth: 2,
-                ).animate().fadeIn(duration: 300.ms),
+
+              // Loading indicator with fade in
+              AnimatedBuilder(
+                animation: _textController,
+                builder: (context, child) {
+                  if (_textController.value < 1.0) {
+                    return const SizedBox.shrink();
+                  }
+                  return child!;
+                },
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                        strokeWidth: 3,
+                        backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'جاري التحميل...',
+                      style: AppTypography.textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

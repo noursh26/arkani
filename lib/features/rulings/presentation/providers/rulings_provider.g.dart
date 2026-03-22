@@ -6,7 +6,7 @@ part of 'rulings_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$rulingsNotifierHash() => r'f28b83aa6c15b3f7297a665f788199915f06148a';
+String _$rulingsNotifierHash() => r'76605933ec515e3215b892296da39cc1044904b9';
 
 /// See also [RulingsNotifier].
 @ProviderFor(RulingsNotifier)

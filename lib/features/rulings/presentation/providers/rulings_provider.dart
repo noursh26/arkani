@@ -18,6 +18,10 @@ class RulingsNotifier extends _$RulingsNotifier {
 
   @override
   RulingsState build() {
+    // Register dispose callback for timer cleanup
+    ref.onDispose(() {
+      _searchDebounceTimer?.cancel();
+    });
     return const RulingsState();
   }
 
