@@ -10,8 +10,8 @@ _$RulingTopicImpl _$$RulingTopicImplFromJson(Map<String, dynamic> json) =>
     _$RulingTopicImpl(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      icon: json['icon'] as String,
-      rulingsCount: (json['rulings_count'] as num).toInt(),
+      icon: json['icon'] as String?,
+      rulingsCount: (json['rulings_count'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$RulingTopicImplToJson(_$RulingTopicImpl instance) =>
