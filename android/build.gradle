@@ -43,6 +43,16 @@ subprojects {
     }
 }
 
+subprojects {
+    afterEvaluate {
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            kotlinOptions {
+                freeCompilerArgs += ['-Xskip-metadata-version-check']
+            }
+        }
+    }
+}
+
 subprojects { subproject ->
     subproject.pluginManager.withPlugin('com.android.library') {
         def androidExt = subproject.extensions.findByName('android')
