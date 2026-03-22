@@ -62,7 +62,7 @@ class NotificationService {
     _initialized = true;
 
     if (kDebugMode) {
-      print('NotificationService initialized successfully');
+      debugPrint('NotificationService initialized successfully');
     }
   }
 
@@ -112,7 +112,7 @@ class NotificationService {
   void _onNotificationTapped(NotificationResponse response) {
     final payload = response.payload;
     if (kDebugMode) {
-      print('Notification tapped: $payload');
+      debugPrint('Notification tapped: $payload');
     }
     onNotificationTapped?.call(payload);
   }
@@ -196,7 +196,7 @@ class NotificationService {
     final now = DateTime.now();
     if (scheduledTime.isBefore(now)) {
       if (kDebugMode) {
-        print('Scheduled time is in the past, skipping notification');
+        debugPrint('Scheduled time is in the past, skipping notification');
       }
       return;
     }
@@ -237,7 +237,7 @@ class NotificationService {
     );
 
     if (kDebugMode) {
-      print('Scheduled notification for $scheduledTime');
+      debugPrint('Scheduled notification for $scheduledTime');
     }
   }
 
@@ -256,7 +256,7 @@ class NotificationService {
     final now = DateTime.now();
     if (prayerTime.isBefore(now)) {
       if (kDebugMode) {
-        print('Prayer time $prayerName is in the past, skipping notification');
+        debugPrint('Prayer time $prayerName is in the past, skipping notification');
       }
       return;
     }
@@ -303,7 +303,7 @@ class NotificationService {
     );
 
     if (kDebugMode) {
-      print('Scheduled notification for $prayerName at $prayerTime');
+      debugPrint('Scheduled notification for $prayerName at $prayerTime');
     }
   }
 
@@ -322,7 +322,7 @@ class NotificationService {
     await schedulePrayerNotification(id: 5, prayerName: 'العشاء', prayerTime: ishaTime);
 
     if (kDebugMode) {
-      print('All daily prayers scheduled successfully');
+      debugPrint('All daily prayers scheduled successfully');
     }
   }
 
@@ -374,7 +374,7 @@ class NotificationService {
     );
 
     if (kDebugMode) {
-      print('Adhkar reminder scheduled for $reminderTime');
+      debugPrint('Adhkar reminder scheduled for $reminderTime');
     }
   }
 
