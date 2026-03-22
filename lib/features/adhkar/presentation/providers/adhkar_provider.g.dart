@@ -6,7 +6,7 @@ part of 'adhkar_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$adhkarNotifierHash() => r'2cbe8b3a45ba1da9c676d81d877610567284d763';
+String _$adhkarNotifierHash() => r'a2f9ec41a84d738795ac7422d8783df3172624c9';
 
 /// See also [AdhkarNotifier].
 @ProviderFor(AdhkarNotifier)

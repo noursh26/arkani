@@ -23,6 +23,7 @@ mixin _$RulingTopic {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get icon => throw _privateConstructorUsedError;
+  @JsonKey(name: 'rulings_count')
   int get rulingsCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +38,11 @@ abstract class $RulingTopicCopyWith<$Res> {
           RulingTopic value, $Res Function(RulingTopic) then) =
       _$RulingTopicCopyWithImpl<$Res, RulingTopic>;
   @useResult
-  $Res call({int id, String name, String icon, int rulingsCount});
+  $Res call(
+      {int id,
+      String name,
+      String icon,
+      @JsonKey(name: 'rulings_count') int rulingsCount});
 }
 
 /// @nodoc
@@ -87,7 +92,11 @@ abstract class _$$RulingTopicImplCopyWith<$Res>
       __$$RulingTopicImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String icon, int rulingsCount});
+  $Res call(
+      {int id,
+      String name,
+      String icon,
+      @JsonKey(name: 'rulings_count') int rulingsCount});
 }
 
 /// @nodoc
@@ -134,7 +143,7 @@ class _$RulingTopicImpl implements _RulingTopic {
       {required this.id,
       required this.name,
       required this.icon,
-      required this.rulingsCount});
+      @JsonKey(name: 'rulings_count') required this.rulingsCount});
 
   factory _$RulingTopicImpl.fromJson(Map<String, dynamic> json) =>
       _$$RulingTopicImplFromJson(json);
@@ -146,6 +155,7 @@ class _$RulingTopicImpl implements _RulingTopic {
   @override
   final String icon;
   @override
+  @JsonKey(name: 'rulings_count')
   final int rulingsCount;
 
   @override
@@ -185,10 +195,11 @@ class _$RulingTopicImpl implements _RulingTopic {
 
 abstract class _RulingTopic implements RulingTopic {
   const factory _RulingTopic(
-      {required final int id,
-      required final String name,
-      required final String icon,
-      required final int rulingsCount}) = _$RulingTopicImpl;
+          {required final int id,
+          required final String name,
+          required final String icon,
+          @JsonKey(name: 'rulings_count') required final int rulingsCount}) =
+      _$RulingTopicImpl;
 
   factory _RulingTopic.fromJson(Map<String, dynamic> json) =
       _$RulingTopicImpl.fromJson;
@@ -200,6 +211,7 @@ abstract class _RulingTopic implements RulingTopic {
   @override
   String get icon;
   @override
+  @JsonKey(name: 'rulings_count')
   int get rulingsCount;
   @override
   @JsonKey(ignore: true)
@@ -453,8 +465,11 @@ RulingsPaginated _$RulingsPaginatedFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RulingsPaginated {
+  @JsonKey(name: 'current_page')
   int get currentPage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'last_page')
   int get lastPage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'per_page')
   int get perPage => throw _privateConstructorUsedError;
   int get total => throw _privateConstructorUsedError;
   List<IslamicRuling> get items => throw _privateConstructorUsedError;
@@ -472,9 +487,9 @@ abstract class $RulingsPaginatedCopyWith<$Res> {
       _$RulingsPaginatedCopyWithImpl<$Res, RulingsPaginated>;
   @useResult
   $Res call(
-      {int currentPage,
-      int lastPage,
-      int perPage,
+      {@JsonKey(name: 'current_page') int currentPage,
+      @JsonKey(name: 'last_page') int lastPage,
+      @JsonKey(name: 'per_page') int perPage,
       int total,
       List<IslamicRuling> items});
 }
@@ -532,9 +547,9 @@ abstract class _$$RulingsPaginatedImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int currentPage,
-      int lastPage,
-      int perPage,
+      {@JsonKey(name: 'current_page') int currentPage,
+      @JsonKey(name: 'last_page') int lastPage,
+      @JsonKey(name: 'per_page') int perPage,
       int total,
       List<IslamicRuling> items});
 }
@@ -585,9 +600,9 @@ class __$$RulingsPaginatedImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RulingsPaginatedImpl implements _RulingsPaginated {
   const _$RulingsPaginatedImpl(
-      {required this.currentPage,
-      required this.lastPage,
-      required this.perPage,
+      {@JsonKey(name: 'current_page') required this.currentPage,
+      @JsonKey(name: 'last_page') required this.lastPage,
+      @JsonKey(name: 'per_page') required this.perPage,
       required this.total,
       required final List<IslamicRuling> items})
       : _items = items;
@@ -596,10 +611,13 @@ class _$RulingsPaginatedImpl implements _RulingsPaginated {
       _$$RulingsPaginatedImplFromJson(json);
 
   @override
+  @JsonKey(name: 'current_page')
   final int currentPage;
   @override
+  @JsonKey(name: 'last_page')
   final int lastPage;
   @override
+  @JsonKey(name: 'per_page')
   final int perPage;
   @override
   final int total;
@@ -652,9 +670,9 @@ class _$RulingsPaginatedImpl implements _RulingsPaginated {
 
 abstract class _RulingsPaginated implements RulingsPaginated {
   const factory _RulingsPaginated(
-      {required final int currentPage,
-      required final int lastPage,
-      required final int perPage,
+      {@JsonKey(name: 'current_page') required final int currentPage,
+      @JsonKey(name: 'last_page') required final int lastPage,
+      @JsonKey(name: 'per_page') required final int perPage,
       required final int total,
       required final List<IslamicRuling> items}) = _$RulingsPaginatedImpl;
 
@@ -662,10 +680,13 @@ abstract class _RulingsPaginated implements RulingsPaginated {
       _$RulingsPaginatedImpl.fromJson;
 
   @override
+  @JsonKey(name: 'current_page')
   int get currentPage;
   @override
+  @JsonKey(name: 'last_page')
   int get lastPage;
   @override
+  @JsonKey(name: 'per_page')
   int get perPage;
   @override
   int get total;

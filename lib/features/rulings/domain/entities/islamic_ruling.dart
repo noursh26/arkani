@@ -9,7 +9,7 @@ class RulingTopic with _$RulingTopic {
     required int id,
     required String name,
     required String icon,
-    required int rulingsCount,
+    @JsonKey(name: 'rulings_count') required int rulingsCount,
   }) = _RulingTopic;
 
   factory RulingTopic.fromJson(Map<String, dynamic> json) =>
@@ -33,9 +33,9 @@ class IslamicRuling with _$IslamicRuling {
 @freezed
 class RulingsPaginated with _$RulingsPaginated {
   const factory RulingsPaginated({
-    required int currentPage,
-    required int lastPage,
-    required int perPage,
+    @JsonKey(name: 'current_page') required int currentPage,
+    @JsonKey(name: 'last_page') required int lastPage,
+    @JsonKey(name: 'per_page') required int perPage,
     required int total,
     required List<IslamicRuling> items,
   }) = _RulingsPaginated;
