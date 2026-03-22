@@ -174,7 +174,7 @@ class RulingsNotifier extends _$RulingsNotifier {
       }
 
       final data = response['data'] as Map<String, dynamic>?;
-      if (data == null) {
+      final paginated = RulingsPaginated.fromJson(data);
         state = state.copyWith(
           isLoadingRulings: false,
           isLoadingMore: false,
